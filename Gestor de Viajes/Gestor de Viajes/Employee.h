@@ -6,7 +6,7 @@ class Employee
 protected:
 	int id;
 	std::string email, name, surname;
-	virtual bool isResident() {};
+	virtual bool isResident() { return false; };
 public:
 	int getID();
 	std::string getEmail();

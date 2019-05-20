@@ -134,6 +134,8 @@
     <ClInclude Include="Database.h" />
     <ClInclude Include="Employee.h" />
     <ClInclude Include="EmployeeManager.h" />
+    <ClInclude Include="Resident.h" />
+    <ClInclude Include="Temporary.h" />
     <ClInclude Include="Travel.h" />
     <ClInclude Include="TravelManager.h" />
   </ItemGroup>

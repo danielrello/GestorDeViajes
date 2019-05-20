@@ -17,11 +17,12 @@ void setDataBase(QSqlDatabase *db)
 
 
 	QSqlQuery query(
-		"CREATE TABLE IF NOT EXISTS resident ("
+		"CREATE TABLE IF NOT EXISTS Resident ("
 		"Id int not null default 0, "
 		"name TEXT not null, "
 		"surname TEXT not null, "
 		"email TEXT not null, "
+		"type int not null default 0,"
 		"IdTravel INTEGER, "
 		"PRIMARY KEY(Id), "
 		"FOREIGN KEY(IdTravel) REFERENCES Travel(Id))"
@@ -35,6 +36,7 @@ void setDataBase(QSqlDatabase *db)
 		"name TEXT not null,"
 		"surname TEXT not null,"
 		"email TEXT not null,"
+		"type int not null default 0,"
 		"PRIMARY KEY(Id))"
 	))		
 		qWarning() << "CREATING ERROR: " << query.lastError().text();
@@ -69,30 +71,41 @@ void insertQuery(char **data, int source)
 	switch (source)
 	{
 	case RESIDENT:
-		query.prepare("INSERT INTO resident(name, surname, email) VALUES(:param1, :param2, :param3)");
+		query.prepare("INSERT INTO resident(id, name, surname, email, type) VALUES(:param1, :param2, :param3, :param4, :param5)");
 		break;
 	case TEMPORARY:
-		query.prepare("INSERT INTO temporary(name, surname, email) VALUES(:param1, :param2, :param3)");
+		query.prepare("INSERT INTO temporary(id, name, surname, email, type) VALUES(:param1, :param2, :param3, :param4, :param5)");
 		break;
 	case TRAVEL:
 		query.prepare(
-			"INSERT INTO travel(departurelocation, arrivallocation, departuretime, arrivaltime, cost)"
-			"VALUES(:param1, :param2, :param3, :param4, :param5)");
+			"INSERT INTO travel(id, departurelocation, arrivallocation, departuretime, arrivaltime, cost)"
+			"VALUES(:param1, :param2, :param3, :param4, :param5, , :param6)");
 		break;
 	}
 	query.bindValue(":param1", data[0]);
 	query.bindValue(":param2", data[1]);
 	query.bindValue(":param3", data[2]);
+	query.bindValue(":param4", source);
+	if(source != TRAVEL)
+		query.bindValue(":param5", source);
 	if (source == TRAVEL) {
-		query.bindValue(":param4", data[3]);
 		query.bindValue(":param5", data[4]);
+		query.bindValue(":param6", data[5]);
 	}
-	if (!query.isValid())
-		qWarning() << "SELECTING ERROR: " << query.lastError().text();
-	else
-		query.finish();
+	if (!query.exec())
+		qWarning() << "INSERTING ERROR: " << query.lastError().text();
 }
 
 void selectQuery(char **data, int source)
 {
+	QSqlQuery query("SELECT name, surname FROM resident");
+	if (query.first())
+		qInfo() << query.value(0).toString() << query.value(1).toString();
+}
+
+void deleteQuery(char * data, int source)
+{
+	QSqlQuery query("DELETE FROM resident");
+	if (!query.exec())
+		qWarning() << "DELETING ERROR: " << query.lastError().text();
 }

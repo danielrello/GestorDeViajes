@@ -74,5 +74,11 @@
     <ClInclude Include="Database.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Resident.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Temporary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

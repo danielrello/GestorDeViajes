@@ -12,3 +12,4 @@
 void setDataBase(QSqlDatabase *db);
 void insertQuery(char **data, int source);
 void selectQuery(char **data, int source);
+void deleteQuery(char *data, int source);

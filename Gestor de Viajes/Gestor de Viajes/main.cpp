@@ -37,6 +37,8 @@ int main(int argc, char *argv[])
 
 	string name, surname, email;
 	int id;
+	char *type = new char [20];
+	bool resident;
 
 	EmployeeManager manager;
 
@@ -47,6 +49,7 @@ int main(int argc, char *argv[])
 		cout << "2. Delete Employee" << endl;
 		cout << "3. Edit Employee" << endl;
 		cout << "4. View Employee list" << endl;
+		cout << "5. Delete Employee list" << endl;
 		cout << "0. Exit" << endl;
 		cin >> option;
 		switch (option)
@@ -58,7 +61,9 @@ int main(int argc, char *argv[])
 			cin >> surname;
 			cout << "Insert Employee email: ";
 			cin >> email;
-			manager.addEmployee(name, surname, email);
+			cout << "Is resident?: ";
+			cin >> resident;
+			manager.addEmployee(resident, name, surname, email);
 			break;
 		case 2:
 			cout << "Insert Employee id: ";
@@ -80,6 +85,13 @@ int main(int argc, char *argv[])
 			for (int i = 0; i < manager.getSize(); i++) {
 				cout << i << " " << manager.getEmployee(i)->getName() << " " << manager.getEmployee(i)->getSurname() << " " << manager.getEmployee(i)->getEmail() << endl;
 			}
+			selectQuery(nullptr, RESIDENT);
+			break;
+		case 5:
+			cout << "Resident List?: ";
+			cin >> type;
+
+			deleteQuery(type, RESIDENT);
 			break;
 		case 0:
 			running = false;
