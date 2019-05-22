@@ -2,9 +2,20 @@
 #include "Database.h"
 
 
+int EmployeeManager::getPos(int id)
+{
+	int pos = 0;
+	for (int i = 0; i < getSize(); i++) {
+		if (employees[i]->getID() == id)
+			pos = i;
+	}
+	return pos;
+}
+
 EmployeeManager::EmployeeManager()
 {
 	size = 0;
+	loadingDataBase = true;
 }
 
 
@@ -12,55 +23,52 @@ EmployeeManager::~EmployeeManager()
 {
 }
 
-Employee * EmployeeManager::getEmployee(int id)
+void EmployeeManager::setLoading(bool loading)
 {
-	Employee * empleado;
-	for(int i = 0; i < getSize(); i++){
-		if (employees[i].getID() == id)
-			empleado = &employees[i];
-	}
-	return empleado;
+	loadingDataBase = loading;
 }
 
-void EmployeeManager::addEmployee(bool resident, std::string name, std::string surname, std::string email)
+Employee * EmployeeManager::getEmployee(int id)
 {
-	char **data = (char**)malloc(sizeof(char) * 3);
-	for (int i = 0; i < 4; i++) {
-		data[i] = new char[50];
-	}
-	string id = to_string(getSize());
-	id.copy(data[0], id.size());
-	data[0][id.size()] = '\0';
-	name.copy(data[1], name.size());
-	data[1][name.size()] = '\0';
-	surname.copy(data[2], surname.size());
-	data[2][surname.size()] = '\0';
-	email.copy(data[3], email.size());
-	data[3][email.size()] = '\0';
+	return employees[getPos(id)];
+}
 
+void EmployeeManager::addEmployee(bool resident, int id,std::string name, std::string surname, std::string email)
+{
 	if (resident) {
-		Resident nuevoEmpleado(name, surname, email, getSize());
+		Resident *nuevoEmpleado = new Resident(name, surname, email, id);
+		if(!loadingDataBase)
+			nuevoEmpleado->Update();
 		employees.emplace_back(nuevoEmpleado);
-		insertQuery(data, RESIDENT);
 	}
 	else {
-		Temporary nuevoEmpleado(name, surname, email, getSize());
+		Temporary *nuevoEmpleado = new Temporary(name, surname, email, id);
+		if(!loadingDataBase)
+			nuevoEmpleado->Update();
 		employees.emplace_back(nuevoEmpleado);
-		insertQuery(data, TEMPORARY);
 	}
 	size++;
 }
 
 void EmployeeManager::editEmployee(int id, std::string name, std::string surname, std::string email)
 {
-	getEmployee(id)->setName(name);
-	getEmployee(id)->setSurname(surname);
-	getEmployee(id)->setEmail(email);
+	if (getEmployee(id) == nullptr) {
+		cout << "No se encuentra al empleado con el id: " << id << endl;
+	}
+	else {
+		getEmployee(id)->setName(name);
+		getEmployee(id)->setSurname(surname);
+		getEmployee(id)->setEmail(email);
+		getEmployee(id)->Update();
+	}
 }
 
 void EmployeeManager::deleteEmployee(int id)
 {
-	getEmployee(id);
+	int posToDelete = getPos(id);
+	cout << posToDelete << endl;
+	getEmployee(id)->Update();
+	employees.erase(employees.begin() + (posToDelete - 1));
 }
 
 int EmployeeManager::getSize()

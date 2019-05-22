@@ -1,5 +1,7 @@
 #include "Database.h"
 
+using namespace std;
+
 void setDataBase(QSqlDatabase *db)
 {
 	const QString DRIVER("QSQLITE");
@@ -22,7 +24,6 @@ void setDataBase(QSqlDatabase *db)
 		"name TEXT not null, "
 		"surname TEXT not null, "
 		"email TEXT not null, "
-		"type int not null default 0,"
 		"IdTravel INTEGER, "
 		"PRIMARY KEY(Id), "
 		"FOREIGN KEY(IdTravel) REFERENCES Travel(Id))"
@@ -36,7 +37,6 @@ void setDataBase(QSqlDatabase *db)
 		"name TEXT not null,"
 		"surname TEXT not null,"
 		"email TEXT not null,"
-		"type int not null default 0,"
 		"PRIMARY KEY(Id))"
 	))		
 		qWarning() << "CREATING ERROR: " << query.lastError().text();
@@ -54,58 +54,57 @@ void setDataBase(QSqlDatabase *db)
 		"FOREIGN KEY(IdEmployee) REFERENCES Resident(Id))"
 	))
 		qWarning() << "CREATING ERROR: " << query.lastError().text();
-
-	//if (!query.exec("INSERT INTO resident(name, surname, email) VALUES('Eddie', 'Guerrero', 'eddiefasilon@gmail.com')"))
-	//	qWarning() << "INSERTING ERROR: " << query.lastError().text();
-
-	//query.prepare("SELECT name FROM resident");
-	//if (!query.exec())
-	//	qWarning() << "SELECTING ERROR: " << query.lastError().text();
-	//if (query.first())
-	//	qInfo() << query.value(0).toString();
 }
 
-void insertQuery(char **data, int source)
+void readDataBase(EmployeeManager *manager)
 {
-	QSqlQuery query;
-	switch (source)
-	{
-	case RESIDENT:
-		query.prepare("INSERT INTO resident(id, name, surname, email, type) VALUES(:param1, :param2, :param3, :param4, :param5)");
-		break;
-	case TEMPORARY:
-		query.prepare("INSERT INTO temporary(id, name, surname, email, type) VALUES(:param1, :param2, :param3, :param4, :param5)");
-		break;
-	case TRAVEL:
-		query.prepare(
-			"INSERT INTO travel(id, departurelocation, arrivallocation, departuretime, arrivaltime, cost)"
-			"VALUES(:param1, :param2, :param3, :param4, :param5, , :param6)");
-		break;
+	vector<string> data;
+
+	qWarning() << "Leyendo base de datos...";
+	QSqlQuery query("SELECT * FROM resident");
+	QSqlRecord rec = query.record();
+	qDebug() << "Number of columns: " << rec.count();
+	int nameCol = rec.indexOf("name");
+	int id;
+	while (query.next()) {
+		for (int i = 0; i < rec.count() - 1; i++) {
+			if (i == 0)
+				id = query.value(1).toInt();
+			else {
+				string readedData = query.value(i).toString().toUtf8();
+				data.emplace_back(readedData);
+			}
+		}
+		manager->addEmployee(1, id, data[0], data[1], data[2]);
+		data.erase(data.begin(), data.end());
 	}
-	query.bindValue(":param1", data[0]);
-	query.bindValue(":param2", data[1]);
-	query.bindValue(":param3", data[2]);
-	query.bindValue(":param4", source);
-	if(source != TRAVEL)
-		query.bindValue(":param5", source);
-	if (source == TRAVEL) {
-		query.bindValue(":param5", data[4]);
-		query.bindValue(":param6", data[5]);
+	query.prepare("SELECT * FROM temporary");
+	qDebug() << "Number of columns: " << rec.count();
+	while (query.next()) {
+		for (int i = 0; i < rec.count() - 1; i++) {
+			if (i == 0)
+				id = query.value(1).toInt();
+			else {
+				string readedData = query.value(i).toString().toUtf8();
+				data.emplace_back(readedData);
+			}
+		}
+		manager->addEmployee(0, id, data[0], data[1], data[2]);
 	}
-	if (!query.exec())
-		qWarning() << "INSERTING ERROR: " << query.lastError().text();
+	manager->setLoading(false);
 }
 
 void selectQuery(char **data, int source)
 {
 	QSqlQuery query("SELECT name, surname FROM resident");
-	if (query.first())
+	while (query.next())
 		qInfo() << query.value(0).toString() << query.value(1).toString();
 }
 
 void deleteQuery(char * data, int source)
 {
-	QSqlQuery query("DELETE FROM resident");
+	QSqlQuery query("DELETE FROM resident, temporary WHERE id=:param1");
+	query.bindValue(":param1", data);
 	if (!query.exec())
 		qWarning() << "DELETING ERROR: " << query.lastError().text();
 }

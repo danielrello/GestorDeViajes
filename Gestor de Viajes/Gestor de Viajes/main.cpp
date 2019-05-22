@@ -42,6 +42,8 @@ int main(int argc, char *argv[])
 
 	EmployeeManager manager;
 
+	readDataBase(&manager);
+
 	GestordeViajes w;
 	//w.show();
 	while (running == true) {
@@ -49,7 +51,6 @@ int main(int argc, char *argv[])
 		cout << "2. Delete Employee" << endl;
 		cout << "3. Edit Employee" << endl;
 		cout << "4. View Employee list" << endl;
-		cout << "5. Delete Employee list" << endl;
 		cout << "0. Exit" << endl;
 		cin >> option;
 		switch (option)
@@ -63,7 +64,7 @@ int main(int argc, char *argv[])
 			cin >> email;
 			cout << "Is resident?: ";
 			cin >> resident;
-			manager.addEmployee(resident, name, surname, email);
+			manager.addEmployee(resident, manager.getSize(),name, surname, email);
 			break;
 		case 2:
 			cout << "Insert Employee id: ";
@@ -86,12 +87,6 @@ int main(int argc, char *argv[])
 				cout << i << " " << manager.getEmployee(i)->getName() << " " << manager.getEmployee(i)->getSurname() << " " << manager.getEmployee(i)->getEmail() << endl;
 			}
 			selectQuery(nullptr, RESIDENT);
-			break;
-		case 5:
-			cout << "Resident List?: ";
-			cin >> type;
-
-			deleteQuery(type, RESIDENT);
 			break;
 		case 0:
 			running = false;

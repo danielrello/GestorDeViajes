@@ -1,12 +1,15 @@
 #pragma once
 #include <iostream>
 #include <string>
+
+#define MAXLENGHT 50
+
 class Employee
 {
 protected:
 	int id;
 	std::string email, name, surname;
-	virtual bool isResident() { return false; };
+	virtual void print();
 public:
 	int getID();
 	std::string getEmail();
@@ -16,6 +19,8 @@ public:
 	void setEmail(std::string email);
 	void setName(std::string name);
 	void setSurname(std::string surname);
+	virtual bool isResident() { return false; }
+	void Update();
 	Employee();
 	Employee(std::string name, std::string surname, std::string email, int id);
 	~Employee();
