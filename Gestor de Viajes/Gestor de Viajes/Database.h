@@ -6,12 +6,13 @@
 #include <QtSql/qsqlrecord.h>
 #include <qdebug.h>
 #include "EmployeeManager.h"
+#include "TravelManager.h"
 
 #define TEMPORARY 0
 #define RESIDENT 1
 #define TRAVEL 2
 
 void setDataBase(QSqlDatabase *db);
-void readDataBase(EmployeeManager *manager);
+void readDataBase(EmployeeManager *manage0r, TravelManager *travelManager);
 void selectQuery(char **data, int source);
 void deleteQuery(char *data, int source);

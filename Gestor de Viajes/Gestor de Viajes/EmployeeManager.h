@@ -18,10 +18,9 @@ public:
 	void editEmployee(int id, std::string name, std::string surname, std::string email);
 	void deleteEmployee(int id);
 	int getLastID();
-	void setLastID(int size);
+	void setLastID(int id);
 	std::vector<Employee*> getEmployees();
 	void createPDF();
 	void sendEmail();
-
 };
 

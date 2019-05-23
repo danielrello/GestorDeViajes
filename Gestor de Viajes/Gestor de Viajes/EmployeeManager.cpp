@@ -14,7 +14,7 @@ int EmployeeManager::getPos(int id)
 
 EmployeeManager::EmployeeManager()
 {
-	lastID = 0;
+	lastID = -1;
 	loadingDataBase = true;
 }
 
@@ -40,6 +40,7 @@ Employee * EmployeeManager::getEmployee(int id)
 
 void EmployeeManager::addEmployee(bool resident, int id, std::string name, std::string surname, std::string email)
 {
+	lastID = id;
 	if (resident) {
 		Resident *nuevoEmpleado = new Resident(name, surname, email, id);
 		if(!loadingDataBase)
@@ -87,7 +88,7 @@ int EmployeeManager::getLastID()
 
 void EmployeeManager::setLastID(int id)
 {
-	this->lastID = id;
+	lastID = id;
 }
 
 std::vector<Employee*> EmployeeManager::getEmployees()

@@ -56,11 +56,11 @@ void setDataBase(QSqlDatabase *db)
 		qWarning() << "CREATING ERROR: " << query.lastError().text();
 }
 
-void readDataBase(EmployeeManager *manager)
+void readDataBase(EmployeeManager *manager, TravelManager *travelManager)
 {
 	vector<string> data;
-
-	qWarning() << "Leyendo base de datos...";
+	//-----------Employee Read----------
+	qWarning() << "Reading Employee data...";
 	QSqlQuery query;
 	query.prepare("SELECT id, name, surname, email FROM resident");
 	int id;
@@ -95,9 +95,29 @@ void readDataBase(EmployeeManager *manager)
 		manager->addEmployee(0, id, data[0], data[1], data[2]);
 		data.erase(data.begin(), data.end());
 	}
-	manager->setLastID(lastID);
 	cout << "Last ID: " << lastID << endl;
+	manager->setLastID(lastID);
 	manager->setLoading(false);
+	//-------Travel Read------------
+	int cost = 0;
+	cout << "Reading Travel data..." << endl;
+	query.prepare("SELECT id, departureLocation, arrivalLocation, departureTime, arrivalTime, cost FROM travel");
+	if (!query.exec())
+		qDebug() << query.lastError();
+	rec = query.record();
+	while (query.next()) {
+		id = query.value(0).toInt();
+		cost = query.value(5).toInt();
+		if (id > lastID)
+			lastID = id;
+		for (int i = 1; i < rec.count(); i++) {
+			string readedData = query.value(i).toString().toUtf8();
+			data.emplace_back(readedData);
+		}
+		travelManager->addTravel(id, data[0], data[1], data[2], data[3], cost);
+		data.erase(data.begin(), data.end());
+	}
+	travelManager->setLoading(false);
 }
 
 void selectQuery(char **data, int source)

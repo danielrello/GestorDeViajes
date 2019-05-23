@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-#define MAXLENGHT 50
+#define MAXLENGHT 100
 
 class Employee
 {
