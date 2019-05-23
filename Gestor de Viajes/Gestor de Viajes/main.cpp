@@ -36,13 +36,13 @@ int main(int argc, char *argv[])
 	int option;
 
 	string name, surname, email;
-	int id;
+	int id, lastID;
 	char *type = new char [20];
 	bool resident;
 
-	EmployeeManager manager;
+	EmployeeManager *manager = new EmployeeManager;
 
-	readDataBase(&manager);
+	readDataBase(manager);
 
 	GestordeViajes w;
 	//w.show();
@@ -64,29 +64,30 @@ int main(int argc, char *argv[])
 			cin >> email;
 			cout << "Is resident?: ";
 			cin >> resident;
-			manager.addEmployee(resident, manager.getSize(),name, surname, email);
+			lastID = manager->getLastID() + 1;
+			manager->addEmployee(resident, lastID,name, surname, email);
+			manager->setLastID(lastID);
 			break;
 		case 2:
 			cout << "Insert Employee id: ";
 			cin >> id;
-			manager.deleteEmployee(id);
+			manager->deleteEmployee(id);
 			break;
 		case 3:
 			cout << "Insert Employee id: ";
 			cin >> id;
-			cout << "You are changing employee " << manager.getEmployee(id)->getName() << endl;
+			cout << "You are changing employee " << manager->getEmployee(id)->getName() << endl;
 			cout << "Insert new name: ";
 			cin >> name;
 			cout << "Insert new surname: ";
 			cin >> surname;
 			cout << "Insert new email: ";
 			cin >> email;
-			manager.editEmployee(id, name, surname, email);
+			manager->editEmployee(id, name, surname, email);
 		case 4:
-			for (int i = 0; i < manager.getSize(); i++) {
-				cout << i << " " << manager.getEmployee(i)->getName() << " " << manager.getEmployee(i)->getSurname() << " " << manager.getEmployee(i)->getEmail() << endl;
+			for (int i = 0; i < manager->getEmployees().size(); i++) {
+				manager->getEmployees()[i]->print();
 			}
-			selectQuery(nullptr, RESIDENT);
 			break;
 		case 0:
 			running = false;

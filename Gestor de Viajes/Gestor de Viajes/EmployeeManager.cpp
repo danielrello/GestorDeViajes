@@ -4,8 +4,8 @@
 
 int EmployeeManager::getPos(int id)
 {
-	int pos = 0;
-	for (int i = 0; i < getSize(); i++) {
+	int pos = -1;
+	for (int i = 0; i < employees.size(); i++) {
 		if (employees[i]->getID() == id)
 			pos = i;
 	}
@@ -14,7 +14,7 @@ int EmployeeManager::getPos(int id)
 
 EmployeeManager::EmployeeManager()
 {
-	size = 0;
+	lastID = 0;
 	loadingDataBase = true;
 }
 
@@ -30,10 +30,15 @@ void EmployeeManager::setLoading(bool loading)
 
 Employee * EmployeeManager::getEmployee(int id)
 {
-	return employees[getPos(id)];
+	Employee * employee = nullptr;
+	int pos = getPos(id);
+	if (pos != -1) {
+		employee = employees[pos];
+	}
+	return employee;
 }
 
-void EmployeeManager::addEmployee(bool resident, int id,std::string name, std::string surname, std::string email)
+void EmployeeManager::addEmployee(bool resident, int id, std::string name, std::string surname, std::string email)
 {
 	if (resident) {
 		Resident *nuevoEmpleado = new Resident(name, surname, email, id);
@@ -47,13 +52,12 @@ void EmployeeManager::addEmployee(bool resident, int id,std::string name, std::s
 			nuevoEmpleado->Update();
 		employees.emplace_back(nuevoEmpleado);
 	}
-	size++;
 }
 
 void EmployeeManager::editEmployee(int id, std::string name, std::string surname, std::string email)
 {
 	if (getEmployee(id) == nullptr) {
-		cout << "No se encuentra al empleado con el id: " << id << endl;
+		cout << "The employee with id: " << id << " does not exist."<< endl;
 	}
 	else {
 		getEmployee(id)->setName(name);
@@ -66,12 +70,27 @@ void EmployeeManager::editEmployee(int id, std::string name, std::string surname
 void EmployeeManager::deleteEmployee(int id)
 {
 	int posToDelete = getPos(id);
-	cout << posToDelete << endl;
-	getEmployee(id)->Update();
-	employees.erase(employees.begin() + (posToDelete - 1));
+	if (posToDelete != -1) {
+		cout << "PosToDelete: " << posToDelete << endl;
+		getEmployee(id)->Update();
+		employees.erase(employees.begin() + (posToDelete));
+	}
+	else {
+		cout << "The employee with id: " << id << " does not exist." << endl;
+	}
 }
 
-int EmployeeManager::getSize()
+int EmployeeManager::getLastID()
 {
-	return size;
+	return lastID;
+}
+
+void EmployeeManager::setLastID(int id)
+{
+	this->lastID = id;
+}
+
+std::vector<Employee*> EmployeeManager::getEmployees()
+{
+	return employees;
 }

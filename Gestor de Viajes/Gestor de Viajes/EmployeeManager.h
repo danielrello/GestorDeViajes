@@ -5,7 +5,7 @@
 class EmployeeManager
 {
 	std::vector<Employee*> employees;
-	int size;
+	int lastID;
 	int getPos(int id);
 	bool loadingDataBase;
 public:
@@ -17,7 +17,9 @@ public:
 	void addEmployee(bool resident, int id,std::string name, std::string surname, std::string email);
 	void editEmployee(int id, std::string name, std::string surname, std::string email);
 	void deleteEmployee(int id);
-	int getSize();
+	int getLastID();
+	void setLastID(int size);
+	std::vector<Employee*> getEmployees();
 	void createPDF();
 	void sendEmail();
 

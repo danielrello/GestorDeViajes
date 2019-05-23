@@ -61,42 +61,48 @@ void readDataBase(EmployeeManager *manager)
 	vector<string> data;
 
 	qWarning() << "Leyendo base de datos...";
-	QSqlQuery query("SELECT * FROM resident");
+	QSqlQuery query;
+	query.prepare("SELECT id, name, surname, email FROM resident");
+	int id;
+	int lastID = 0;
+	if (!query.exec())
+		qDebug() << query.lastError();
 	QSqlRecord rec = query.record();
 	qDebug() << "Number of columns: " << rec.count();
 	int nameCol = rec.indexOf("name");
-	int id;
 	while (query.next()) {
-		for (int i = 0; i < rec.count() - 1; i++) {
-			if (i == 0)
-				id = query.value(1).toInt();
-			else {
+		id = query.value(0).toInt();
+		if (id > lastID)
+			lastID = id;
+		for (int i = 1; i <= rec.count(); i++) {
 				string readedData = query.value(i).toString().toUtf8();
 				data.emplace_back(readedData);
-			}
 		}
 		manager->addEmployee(1, id, data[0], data[1], data[2]);
 		data.erase(data.begin(), data.end());
 	}
-	query.prepare("SELECT * FROM temporary");
-	qDebug() << "Number of columns: " << rec.count();
+	query.prepare("SELECT id, name, surname, email FROM temporary");
+	if (!query.exec())
+		qDebug() << query.lastError();
 	while (query.next()) {
-		for (int i = 0; i < rec.count() - 1; i++) {
-			if (i == 0)
-				id = query.value(1).toInt();
-			else {
-				string readedData = query.value(i).toString().toUtf8();
-				data.emplace_back(readedData);
-			}
+		id = query.value(0).toInt();
+		if (id > lastID)
+			lastID = id;
+		for (int i = 1; i <= rec.count(); i++) {
+			string readedData = query.value(i).toString().toUtf8();
+			data.emplace_back(readedData);
 		}
 		manager->addEmployee(0, id, data[0], data[1], data[2]);
+		data.erase(data.begin(), data.end());
 	}
+	manager->setLastID(lastID);
+	cout << "Last ID: " << lastID << endl;
 	manager->setLoading(false);
 }
 
 void selectQuery(char **data, int source)
 {
-	QSqlQuery query("SELECT name, surname FROM resident");
+	QSqlQuery query(QString("SELECT name, surname FROM Resident"));
 	while (query.next())
 		qInfo() << query.value(0).toString() << query.value(1).toString();
 }

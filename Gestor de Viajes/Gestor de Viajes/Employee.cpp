@@ -11,15 +11,17 @@ using namespace std;
 void Employee::Update()
 {
 	char *type = new char[10];
+	char **data = (char**)malloc(sizeof(char*) * 3);
+
+	for (int i = 0; i < 3; i++) {
+		data[i] = (char*)malloc(sizeof(char) * MAXLENGHT);
+	}
+
 	if (isResident()) {
 		type = "resident";
 	}
 	else {
 		type = "temporary";
-	}
-	char **data = (char**)malloc(sizeof(char*) * 3);
-	for (int i = 0; i < 3; i++) {
-		data[i] = (char*)malloc(sizeof(char) * MAXLENGHT);
 	}
 
 	char opcion;
@@ -47,16 +49,18 @@ void Employee::Update()
 		.arg(data[1])
 		.arg(data[2]));
 	if (!query.exec()) {
-		qDebug() << query.lastError().text();
+		qDebug() << "SELECT ERROR: " << query.lastError().text();
 	}
 	if (query.first()) {
+		qDebug() << "Eliminando: " << query.value(0).toInt() << " | " << query.value(1).toString().toUtf8() << " | " << query.value(2).toString().toUtf8();
 		query.prepare(QString(
-			"DELETE FROM %1"
+			"DELETE FROM %1 "
 			"WHERE id=%2")
 			.arg(type)
 			.arg(id));
 		if (!query.exec())
-			qDebug() << query.lastError().text() << endl;
+			qDebug() << "DELETE ERROR: " << query.lastError().text() << endl;
+		return;
 	}
 #pragma endregion
 
@@ -65,11 +69,10 @@ void Employee::Update()
 	//Compruebo si estamos insertando un nuevo empleado o modificando otro, si tienen mismo id, estamos modificando.	
 	query.prepare(QString(
 		"SELECT id "
-		"FROM %2 "
-		"WHERE id=%1 ").arg(id).arg(type));
-	if (!query.exec()) {
-		qDebug() << query.lastError().text();
-	}
+		"FROM %1 "
+		"WHERE id=%2").arg(type).arg(id));
+	if (!query.exec())
+		qDebug() << query.lastError();
 	if (query.first()) {
 		query.prepare(QString(
 			"UPDATE %5 "
@@ -85,6 +88,7 @@ void Employee::Update()
 			return;
 		}
 		else {
+			cout << "Modificando..." << endl;
 			return;
 		}
 	}
@@ -96,18 +100,17 @@ void Employee::Update()
 		"SELECT name, surname, email, COUNT(*) "
 		"FROM %1 "
 		"GROUP BY name, surname, email "
-		"HAVING COUNT(*) > 1").arg(type));
-	if (!query.exec()) {
-		qDebug() << query.lastError().text();
-	}
+		"HAVING COUNT(*) >= 1").arg(type));
+	if (!query.exec())
+		qDebug() << query.lastError();
 	if (query.first()) {
 		cout << "Usuario duplicado: Desea continuar? (Y/N)" << endl;
-		qInfo() << query.value(0).toString() << query.value(1).toString();
 		cin >> opcion;
 		if (opcion == 'N' || opcion == 'n') {
 			return;
 		}
 	}
+	cout << "Insertando..." << endl;
 	//Añado el residente a la base de datos
 	query.prepare(QString(
 		"INSERT INTO %1(id, name, surname, email) VALUES(:param1, :param2, :param3, :param4)")
