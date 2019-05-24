@@ -24,9 +24,7 @@ void setDataBase(QSqlDatabase *db)
 		"name TEXT not null, "
 		"surname TEXT not null, "
 		"email TEXT not null, "
-		"IdTravel INTEGER, "
 		"PRIMARY KEY(Id), "
-		"FOREIGN KEY(IdTravel) REFERENCES Travel(Id))"
 	);
 	if (!query.isActive())
 		qWarning() << "CREATING ERROR: " << query.lastError().text();
