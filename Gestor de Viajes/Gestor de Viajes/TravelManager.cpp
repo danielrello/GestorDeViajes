@@ -44,9 +44,9 @@ void TravelManager::addTravel(int id, std::string departureLocation, std::string
 {
 	Travel *travel = new Travel(id, departureLocation, arrivalLocation, departureTime, arrivalTime, cost);
 	travels.emplace_back(travel);
-	lastID = id;
 	if (!loadingDataBase)
 		travel->Update();
+	lastID = id;
 }
 
 void TravelManager::editTravel(int id, std::string departureLocation, std::string arrivalLocation, std::string departureTime, std::string arrivalTime, int cost)

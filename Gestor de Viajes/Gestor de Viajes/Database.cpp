@@ -75,8 +75,8 @@ void readDataBase(EmployeeManager *manager, TravelManager *travelManager)
 		if (id > lastID)
 			lastID = id;
 		for (int i = 1; i <= rec.count(); i++) {
-				string readedData = query.value(i).toString().toUtf8();
-				data.emplace_back(readedData);
+			string readedData = query.value(i).toString().toUtf8();
+			data.emplace_back(readedData);
 		}
 		manager->addEmployee(1, id, data[0], data[1], data[2]);
 		data.erase(data.begin(), data.end());
@@ -117,14 +117,20 @@ void readDataBase(EmployeeManager *manager, TravelManager *travelManager)
 		travelManager->addTravel(id, data[0], data[1], data[2], data[3], cost);
 		data.erase(data.begin(), data.end());
 	}
-	travelManager->setLoading(false);
-}
-
-void selectQuery(char **data, int source)
-{
-	QSqlQuery query(QString("SELECT name, surname FROM Resident"));
-	while (query.next())
-		qInfo() << query.value(0).toString() << query.value(1).toString();
+	query.prepare("SELECT idEmployee, id FROM travel WHERE idEmployee IS NOT NULL");
+	if (!query.exec())
+		qDebug() << query.lastError().text();
+	else {
+		while (query.next()) {
+			id = query.value(0).toInt();
+			int idTravel = query.value(1).toInt();
+			Resident *resident = (Resident*)manager->getEmployee(id);
+			resident->linkTravel(travelManager->getTravel(idTravel));
+		}
+		travelManager->setLoading(false);
+		cout << "Last ID: " << lastID << endl;
+		manager->setLastID(lastID);
+	}
 }
 
 void deleteQuery(char * data, int source)

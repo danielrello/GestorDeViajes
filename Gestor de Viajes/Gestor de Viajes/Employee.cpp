@@ -99,8 +99,13 @@ void Employee::Update()
 	query.prepare(QString(
 		"SELECT name, surname, email, COUNT(*) "
 		"FROM %1 "
+		"WHERE name='%2' AND surname='%3' AND email='%4' "
 		"GROUP BY name, surname, email "
-		"HAVING COUNT(*) >= 1").arg(type));
+		"HAVING COUNT(*) >= 1")
+		.arg(type)
+		.arg(data[0])
+		.arg(data[1])
+		.arg(data[2]));
 	if (!query.exec())
 		qDebug() << query.lastError();
 	if (query.first()) {
@@ -148,6 +153,7 @@ void Employee::print()
 {
 	std::cout << id << " | " << name << " | " << surname << " | "<< email << std::endl;
 }
+
 
 int Employee::getID()
 {

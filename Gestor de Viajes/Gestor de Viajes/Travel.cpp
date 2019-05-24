@@ -92,7 +92,7 @@ void Travel::Update()
 	data[3][arrivalTime.size()] = '\0';
 
 #pragma region Delete
-	//Compruebo si estamos eliminando un empleado, si tienen todo igual, estamos borrando.	
+	//Compruebo si estamos eliminando un viaje, si tienen todo igual, estamos borrando.	
 	query.prepare(QString(
 		"SELECT id, departureLocation, arrivalLocation, departureTime, arrivalTime, cost "
 		"FROM travel "
@@ -120,7 +120,7 @@ void Travel::Update()
 
 
 #pragma region Modify
-	//Compruebo si estamos insertando un nuevo empleado o modificando otro, si tienen mismo id, estamos modificando.	
+	//Compruebo si estamos insertando un nuevo viaje o modificando otro, si tienen mismo id, estamos modificando.	
 	query.prepare(QString(
 		"SELECT id "
 		"FROM travel "
@@ -131,7 +131,7 @@ void Travel::Update()
 		query.prepare(QString(
 			"UPDATE travel "
 			"SET departureLocation='%1', arrivalLocation='%2', departureTime='%3', arrivalTime='%4', cost=%5 "
-			"WHERE id=%4")
+			"WHERE id=%6")
 			.arg(data[0])
 			.arg(data[1])
 			.arg(data[2])
@@ -150,12 +150,19 @@ void Travel::Update()
 #pragma endregion
 
 #pragma region Insert
-	//Compruebo que el residente no esta duplicado
+	//Compruebo que el viaje no esta duplicado
 	query.prepare(QString(
 		"SELECT departureLocation, arrivalLocation, departureTime, arrivalTime, COUNT(*) "
 		"FROM travel "
+		"WHERE id=%2 AND departureLocation='%3' AND arrivalLocation='%4' AND departureTime='%5' AND arrivalTime='%6' AND cost=%7 "
 		"GROUP BY departureLocation, arrivalLocation, departureTime, arrivalTime "
-		"HAVING COUNT(*) >= 1"));
+		"HAVING COUNT(*) >= 1")
+		.arg(id)
+		.arg(data[0])
+		.arg(data[1])
+		.arg(data[2])
+		.arg(data[3])
+		.arg(cost));
 	if (!query.exec())
 		qDebug() << "SELECT ERROR: " << query.lastError().text();
 	if (query.first()) {
@@ -166,7 +173,7 @@ void Travel::Update()
 		}
 	}
 	cout << "Insertando..." << endl;
-	//Añado el residente a la base de datos
+	//Añado el viaje a la base de datos
 	query.prepare(QString(
 		"INSERT INTO travel(id, departureLocation, arrivalLocation, departureTime, arrivalTime, cost) "
 		"VALUES(:param1, :param2, :param3, '%1', '%2', :param4)").arg(data[2]).arg(data[3]));

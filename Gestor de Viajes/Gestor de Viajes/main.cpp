@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 	string name, surname, email;
 	int id, lastID;
 	char *type = new char [20];
-	bool resident;
+	bool isResident;
 
 
 	string departureLocation, arrivalLocation, departureTime, arrivalTime;
@@ -47,6 +47,8 @@ int main(int argc, char *argv[])
 
 	EmployeeManager *manager = new EmployeeManager;
 	TravelManager *travelManager = new TravelManager;
+
+	Resident *resident;
 
 	readDataBase(manager, travelManager);
 
@@ -61,6 +63,8 @@ int main(int argc, char *argv[])
 		cout << "6. Delete Travel" << endl;
 		cout << "7. Edit Travel" << endl;
 		cout << "8. View Travel list" << endl;
+		cout << "9. Link Travel" << endl;
+		cout << "10. See Employee Travels" << endl;
 		cout << "0. Exit" << endl;
 		cin >> option;
 		switch (option)
@@ -73,9 +77,9 @@ int main(int argc, char *argv[])
 			cout << "Insert Employee email: ";
 			cin >> email;
 			cout << "Is resident?: ";
-			cin >> resident;
+			cin >> isResident;
 			lastID = manager->getLastID() + 1;
-			manager->addEmployee(resident, lastID, name, surname, email);
+			manager->addEmployee(isResident, lastID, name, surname, email);
 			break;
 		case 2:
 			cout << "Insert Employee id: ";
@@ -112,6 +116,7 @@ int main(int argc, char *argv[])
 			cout << "Insert Travel Cost: ";
 			cin >> cost;
 			lastID = manager->getLastID() + 1;
+			manager->setLastID(lastID);
 			travelManager->addTravel(lastID, departureLocation, arrivalLocation, departureTime, arrivalTime, cost);
 			break;
 		case 6:
@@ -139,6 +144,48 @@ int main(int argc, char *argv[])
 		case 8:
 			for (int i = 0; i < travelManager->getTravels().size(); i++) {
 				travelManager->getTravels()[i]->print();
+			}
+			break;
+		case 9:
+			cout << "Insert Resident Employee id: ";
+			cin >> id;
+			if (manager->getEmployee(id) != nullptr) {
+				if (manager->getEmployee(id)->isResident()) {
+					resident = (Resident*)manager->getEmployee(id);
+				}
+				else {
+					cout << "Employee must be resident." << endl;
+					break;
+				}
+				cout << "Insert Travel id: ";
+				cin >> lastID;
+				resident->linkTravel(travelManager->getTravel(lastID));
+				cout << "Travel:" << endl;
+				travelManager->getTravel(lastID)->print();
+				cout << "Linked to: " << endl;
+				manager->getEmployee(id)->print();
+			}
+			else {
+				cout << "Employee selected does not exists." << endl;
+			}
+			break;
+		case 10:
+			cout << "Insert Resident Employee id: ";
+			cin >> id;
+			if (manager->getEmployee(id) != nullptr) {
+				if (manager->getEmployee(id)->isResident()) {
+					resident = (Resident*)manager->getEmployee(id);
+				}
+				else {
+					cout << "Employee must be resident." << endl;
+					break;
+				}
+				for (int i = 0; i < resident->getTravels().size(); i++) {
+					resident->getTravels()[i]->print();
+				}
+			}
+			else {
+				cout << "Employee selected does not exists." << endl;
 			}
 			break;
 		case 0:
