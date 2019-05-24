@@ -1,6 +1,8 @@
 #include "EmployeeManager.h"
-#include "Database.h"
-
+#include "Functions.h"
+#include <string>
+#include <fstream>
+#include <sstream>
 
 int EmployeeManager::getPos(int id)
 {
@@ -21,6 +23,44 @@ EmployeeManager::EmployeeManager()
 
 EmployeeManager::~EmployeeManager()
 {
+}
+
+void EmployeeManager::importEmployees(const char* filePath)
+{
+	fstream file;
+	file.open(filePath, ios::in);
+	if (!file.is_open()) {
+		cout << "No se puedo abrir el archivo." << endl;
+		return;
+	}
+	int count = 0;
+
+	vector<vector<string>> info;
+	string line;
+	while (getline(file, line))                   // read a whole line of the file
+	{
+		stringstream ss(line);     
+		string data;                // put it in a stringstream (internal stream)
+		vector<string>row;
+
+		row.clear();
+		
+		while (getline(ss, data, ';'))           // read (string) items up to a semmicolon
+		{
+			row.push_back(data);
+		}
+		count++;
+		if (row.size() == 4) info.push_back(row);  
+		else {
+			cout << "Se ha descartado la línea " << count << " por falta de argumentos" << endl;
+		}// add non-empty rows to matrix
+	}
+	for (int i = 1; i < info.size(); i++) {
+		addEmployee(stoi(info[i][3]), getLastID() + 1, info[i][0], info[i][1], info[i][2]);
+	}
+
+	if (count == 0)
+		cout << "Empty CSV\n";
 }
 
 void EmployeeManager::setLoading(bool loading)

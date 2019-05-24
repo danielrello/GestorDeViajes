@@ -1,4 +1,5 @@
 <RCC>
-    <qresource prefix="GestordeViajes">
+    <qresource prefix="/GestordeViajes">
+        <file alias="EmployeeManagement">EmployeeManagement.ui</file>
     </qresource>
 </RCC>

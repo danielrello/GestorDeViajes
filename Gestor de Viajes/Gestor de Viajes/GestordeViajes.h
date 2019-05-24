@@ -12,4 +12,7 @@ public:
 
 private:
 	Ui::GestordeViajesClass ui;
+private slots:
+	void employeeManagement();
+	void exit();
 };

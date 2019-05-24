@@ -1,4 +1,6 @@
 #include "TravelManager.h"
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -23,6 +25,44 @@ TravelManager::TravelManager()
 
 TravelManager::~TravelManager()
 {
+}
+
+void TravelManager::importTravels(const char* filePath)
+{
+	fstream file;
+	file.open(filePath, ios::in);
+	if (!file.is_open()) {
+		cout << "No se puedo abrir el archivo." << endl;
+		return;
+	}
+	int count = 0;
+
+	vector<vector<string>> info;
+	string line;
+	while (getline(file, line))                   // read a whole line of the file
+	{
+		stringstream ss(line);
+		string data;                // put it in a stringstream (internal stream)
+		vector<string>row;
+
+		row.clear();
+
+		while (getline(ss, data, ';'))           // read (string) items up to a semmicolon
+		{
+			row.push_back(data);
+		}
+		count++;
+		if (row.size() == 5) info.push_back(row);
+		else {
+			cout << "Se ha descartado la línea " << count << " por falta de argumentos" << endl;
+		}// add non-empty rows to matrix   // add non-empty rows to matrix
+	}
+	for (int i = 1; i < info.size(); i++) {
+		addTravel(lastID + 1, info[i][0], info[i][1], info[i][2], info[i][3], stoi(info[i][4]));
+	}
+
+	if (count == 0)
+		cout << "Empty CSV\n";
 }
 
 void TravelManager::setLoading(bool loading)
@@ -80,6 +120,11 @@ void TravelManager::deleteTravel(int id)
 int TravelManager::getLastID()
 {
 	return lastID;
+}
+
+void TravelManager::setLastID(int id)
+{
+	lastID = id;
 }
 
 

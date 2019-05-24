@@ -2,23 +2,26 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="GestordeViajes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Employee.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Travel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EmployeeManager.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="EmployeeManagement.cpp">
+      <Filter>Source Files\UI</Filter>
     </ClCompile>
     <ClCompile Include="TravelManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Database.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Functions.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Employee.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="EmployeeManager.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Travel.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GestordeViajes.cpp">
+      <Filter>Source Files\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -42,14 +45,32 @@
       <Extensions>ui</Extensions>
       <ParseFiles>true</ParseFiles>
     </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{ae84284d-3792-4e4c-8b6e-9a722c80f229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{bfcd541e-03b6-4625-a8fa-d9c0af4a8792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\UI">
+      <UniqueIdentifier>{f0fde978-35c4-469d-ac00-91689b371276}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{7ae359ad-6122-4018-a469-42dbce02a503}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="EmployeeManagement.h">
+      <Filter>Header Files\UI</Filter>
+    </QtMoc>
     <QtMoc Include="GestordeViajes.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\UI</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="GestordeViajes.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="EmployeeManagement.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -59,26 +80,26 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Employee.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Functions.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Travel.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Employee.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="EmployeeManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TravelManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Database.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="Resident.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="Temporary.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Travel.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="TravelManager.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

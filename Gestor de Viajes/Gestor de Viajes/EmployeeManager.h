@@ -11,7 +11,7 @@ class EmployeeManager
 public:
 	EmployeeManager();
 	~EmployeeManager();
-	void importEmployees();
+	void importEmployees(const char* file);
 	void setLoading(bool loading);
 	Employee* getEmployee(int id);
 	void addEmployee(bool resident, int id,std::string name, std::string surname, std::string email);

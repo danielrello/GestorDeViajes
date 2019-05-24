@@ -1,5 +1,5 @@
-﻿  Database.cpp
-  EmployeeManager.cpp
+﻿  moc_GestordeViajes.cpp
+  qrc_GestordeViajes.cpp
+  GestordeViajes.cpp
   main.cpp
-  LINK : no se encontr¾ C:\Users\danir\Source\Repos\danielrello\GestorDeViajes\Gestor de Viajes\x64\Debug\\Gestor de Viajes.exe o no lo gener¾ el ·ltimo vÝnculo incremental; ejecutando vÝnculo completo
   Gestor de Viajes.vcxproj -> C:\Users\danir\Source\Repos\danielrello\GestorDeViajes\Gestor de Viajes\x64\Debug\Gestor de Viajes.exe

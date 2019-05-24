@@ -2,8 +2,8 @@
 #include <QtWidgets/QApplication>
 #include "EmployeeManager.h"
 #include "TravelManager.h"
-#include "Database.h"
-#define DEBUG
+#include "Functions.h"
+//#define DEBUG
 
 #ifdef DEBUG
 #include <Windows.h>
@@ -49,11 +49,11 @@ int main(int argc, char *argv[])
 	TravelManager *travelManager = new TravelManager;
 
 	Resident *resident;
-
+	string file;
 	readDataBase(manager, travelManager);
 
 	GestordeViajes w;
-	//w.show();
+	w.show();
 	while (running == true) {
 		cout << "1. Add new Employee" << endl;
 		cout << "2. Delete Employee" << endl;
@@ -65,6 +65,8 @@ int main(int argc, char *argv[])
 		cout << "8. View Travel list" << endl;
 		cout << "9. Link Travel" << endl;
 		cout << "10. See Employee Travels" << endl;
+		cout << "11. Import Employees" << endl;
+		cout << "12. Import Travels" << endl;
 		cout << "0. Exit" << endl;
 		cin >> option;
 		switch (option)
@@ -159,11 +161,16 @@ int main(int argc, char *argv[])
 				}
 				cout << "Insert Travel id: ";
 				cin >> lastID;
-				resident->linkTravel(travelManager->getTravel(lastID));
-				cout << "Travel:" << endl;
-				travelManager->getTravel(lastID)->print();
-				cout << "Linked to: " << endl;
-				manager->getEmployee(id)->print();
+				if (travelManager->getTravel(lastID) != nullptr) {
+					resident->linkTravel(travelManager->getTravel(lastID));
+					cout << "Travel:" << endl;
+					travelManager->getTravel(lastID)->print();
+					cout << "Linked to: " << endl;
+					manager->getEmployee(id)->print();
+				}
+				else {
+					cout << "Travel selected does not exists." << endl;
+				}
 			}
 			else {
 				cout << "Employee selected does not exists." << endl;
@@ -188,6 +195,17 @@ int main(int argc, char *argv[])
 				cout << "Employee selected does not exists." << endl;
 			}
 			break;
+		case 11:
+			cout << "Insert file path: " << endl;
+			cin >> file;
+			manager->importEmployees(file.data());
+			break;
+		case 12:
+			cout << "Insert file path: ";
+			cin >> file;
+			travelManager->setLastID(manager->getLastID());
+			travelManager->importTravels(file.data());
+			break;
 		case 0:
 			running = false;
 			break;
@@ -195,6 +213,5 @@ int main(int argc, char *argv[])
 			break;
 		}
 	}
-	system("pause");
 	return a.exec();
 }
