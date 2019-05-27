@@ -113,12 +113,13 @@
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EmployeeManagement.cpp" />
+    <ClCompile Include="EmployeeWindow.cpp" />
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Employee.cpp" />
     <ClCompile Include="EmployeeManager.cpp" />
     <ClCompile Include="GestordeViajes.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ModifyDialogClass.cpp" />
     <ClCompile Include="Travel.cpp" />
     <ClCompile Include="TravelManager.cpp" />
   </ItemGroup>
@@ -126,20 +127,25 @@
     <QtMoc Include="GestordeViajes.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="EmployeeManagement.ui" />
+    <QtUic Include="EmployeeWindow.ui" />
     <QtUic Include="GestordeViajes.ui" />
+    <QtUic Include="ModifyEmployeeDialog.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="GestordeViajes.qrc" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="EmployeeManagement.h">
+    <QtMoc Include="EmployeeWindow.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtSql</IncludePath>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtSql</IncludePath>
     </QtMoc>
     <ClInclude Include="Functions.h" />
     <ClInclude Include="Employee.h" />
     <ClInclude Include="EmployeeManager.h" />
+    <QtMoc Include="ModifyDialogClass.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtSql</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtSql</IncludePath>
+    </QtMoc>
     <ClInclude Include="Resident.h" />
     <ClInclude Include="Temporary.h" />
     <ClInclude Include="Travel.h" />

@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/GestordeViajes">
-        <file alias="EmployeeManagement">EmployeeManagement.ui</file>
+        <file>EmployeeWindow.ui</file>
+        <file>ModifyEmployeeDialog.ui</file>
     </qresource>
 </RCC>

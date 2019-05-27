@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="EmployeeManagement.cpp">
-      <Filter>Source Files\UI</Filter>
-    </ClCompile>
     <ClCompile Include="TravelManager.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
@@ -21,6 +18,12 @@
       <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="GestordeViajes.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="EmployeeWindow.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ModifyDialogClass.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,10 +62,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="EmployeeManagement.h">
+    <QtMoc Include="GestordeViajes.h">
       <Filter>Header Files\UI</Filter>
     </QtMoc>
-    <QtMoc Include="GestordeViajes.h">
+    <QtMoc Include="EmployeeWindow.h">
+      <Filter>Header Files\UI</Filter>
+    </QtMoc>
+    <QtMoc Include="ModifyDialogClass.h">
       <Filter>Header Files\UI</Filter>
     </QtMoc>
   </ItemGroup>
@@ -70,7 +76,10 @@
     <QtUic Include="GestordeViajes.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="EmployeeManagement.ui">
+    <QtUic Include="ModifyEmployeeDialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="EmployeeWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

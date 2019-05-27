@@ -3,7 +3,7 @@
 #include "EmployeeManager.h"
 #include "TravelManager.h"
 #include "Functions.h"
-//#define DEBUG
+#define DEBUG
 
 #ifdef DEBUG
 #include <Windows.h>
@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
 	readDataBase(manager, travelManager);
 
 	GestordeViajes w;
+	w.addManagers(travelManager, manager);
 	w.show();
 	while (running == true) {
 		cout << "1. Add new Employee" << endl;
