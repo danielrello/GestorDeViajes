@@ -2,5 +2,7 @@
     <qresource prefix="/GestordeViajes">
         <file>EmployeeWindow.ui</file>
         <file>ModifyEmployeeDialog.ui</file>
+        <file>CreateEmployeeDialog.ui</file>
+        <file>EmployeeProfileWindow.ui</file>
     </qresource>
 </RCC>

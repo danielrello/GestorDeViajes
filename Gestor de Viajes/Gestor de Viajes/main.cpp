@@ -3,7 +3,7 @@
 #include "EmployeeManager.h"
 #include "TravelManager.h"
 #include "Functions.h"
-#define DEBUG
+//#define DEBUG
 
 #ifdef DEBUG
 #include <Windows.h>
@@ -55,6 +55,8 @@ int main(int argc, char *argv[])
 	GestordeViajes w;
 	w.addManagers(travelManager, manager);
 	w.show();
+
+#ifdef DEBUG
 	while (running == true) {
 		cout << "1. Add new Employee" << endl;
 		cout << "2. Delete Employee" << endl;
@@ -130,7 +132,7 @@ int main(int argc, char *argv[])
 		case 7:
 			cout << "Insert Travel id: ";
 			cin >> id;
-			cout << "You are changing travel " << travelManager->getTravel(id)->getDepartureLocation() <<"-" << travelManager->getTravel(id)->getArrivalLocation() << endl;
+			cout << "You are changing travel " << travelManager->getTravel(id)->getDepartureLocation() << "-" << travelManager->getTravel(id)->getArrivalLocation() << endl;
 			cout << "Insert new Travel Departure Location: ";
 			cin >> departureLocation;
 			cout << "Insert new Travel Arrival Location: ";
@@ -213,6 +215,9 @@ int main(int argc, char *argv[])
 		default:
 			break;
 		}
-	}
+}
+
+#endif // DEBUG
+
 	return a.exec();
 }

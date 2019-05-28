@@ -14,7 +14,7 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QTableView>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -24,7 +24,7 @@ class Ui_EmployeeWindowClass
 {
 public:
     QWidget *centralwidget;
-    QTableView *tableView;
+    QTableWidget *tableWidget;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
     QPushButton *addButton;
@@ -40,9 +40,9 @@ public:
         EmployeeWindowClass->resize(417, 482);
         centralwidget = new QWidget(EmployeeWindowClass);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        tableView = new QTableView(centralwidget);
-        tableView->setObjectName(QString::fromUtf8("tableView"));
-        tableView->setGeometry(QRect(10, 10, 401, 241));
+        tableWidget = new QTableWidget(centralwidget);
+        tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
+        tableWidget->setGeometry(QRect(10, 10, 401, 241));
         verticalLayoutWidget = new QWidget(centralwidget);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
         verticalLayoutWidget->setGeometry(QRect(140, 280, 160, 141));

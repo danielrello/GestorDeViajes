@@ -24,13 +24,6 @@
      </rect>
     </property>
     <layout class="QGridLayout" name="mainMenu">
-     <item row="3" column="0">
-      <widget class="QPushButton" name="exitButton">
-       <property name="text">
-        <string>Exit</string>
-       </property>
-      </widget>
-     </item>
      <item row="2" column="0">
       <widget class="QPushButton" name="travelManagerB">
        <property name="text">
@@ -38,10 +31,71 @@
        </property>
       </widget>
      </item>
+     <item row="5" column="0">
+      <widget class="QPushButton" name="exitButton">
+       <property name="text">
+        <string>Exit</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="0">
       <widget class="QPushButton" name="employeeManagerB">
        <property name="text">
         <string>Employees</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QPushButton" name="importEmployeeButton">
+       <property name="text">
+        <string>Import Employees</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QPushButton" name="importTravelsButton">
+       <property name="text">
+        <string>Import Travels</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="formLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>310</y>
+      <width>160</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Travel Count</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Employee Count</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="employeeCountLabel">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="employeeCountLabel_2">
+       <property name="text">
+        <string>TextLabel</string>
        </property>
       </widget>
      </item>

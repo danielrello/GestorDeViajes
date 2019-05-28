@@ -12,12 +12,17 @@ class GestordeViajes : public QMainWindow
 public:
 	GestordeViajes(QWidget *parent = Q_NULLPTR);
 	void addManagers(TravelManager *travelManager, EmployeeManager *employeeManager);
-	TravelManager *travelManager;
-	EmployeeManager *employeeManager;
+	TravelManager* getTravelManager();
+	EmployeeManager* getEmployeeManager();
+	void Update();
 
 private:
+	TravelManager *travelManager;
+	EmployeeManager *employeeManager;
 	Ui::GestordeViajesClass ui;
 private slots:
 	void employeeManagement();
+	void importTravels();
+	void importEmployees();
 	void exit();
 };

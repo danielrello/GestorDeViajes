@@ -27,15 +27,15 @@ TravelManager::~TravelManager()
 {
 }
 
-void TravelManager::importTravels(const char* filePath)
+int TravelManager::importTravels(const char* filePath)
 {
 	fstream file;
+	int count = 0;
 	file.open(filePath, ios::in);
 	if (!file.is_open()) {
 		cout << "No se puedo abrir el archivo." << endl;
-		return;
+		return count;
 	}
-	int count = 0;
 
 	vector<vector<string>> info;
 	string line;
@@ -51,18 +51,21 @@ void TravelManager::importTravels(const char* filePath)
 		{
 			row.push_back(data);
 		}
-		count++;
 		if (row.size() == 5) info.push_back(row);
 		else {
 			cout << "Se ha descartado la línea " << count << " por falta de argumentos" << endl;
+			count--;
 		}// add non-empty rows to matrix   // add non-empty rows to matrix
 	}
 	for (int i = 1; i < info.size(); i++) {
 		addTravel(lastID + 1, info[i][0], info[i][1], info[i][2], info[i][3], stoi(info[i][4]));
+		travels.emplace_back(getTravel(lastID));
+		count++;
 	}
 
 	if (count == 0)
 		cout << "Empty CSV\n";
+	return count;
 }
 
 void TravelManager::setLoading(bool loading)

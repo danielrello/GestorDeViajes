@@ -25,15 +25,16 @@ EmployeeManager::~EmployeeManager()
 {
 }
 
-void EmployeeManager::importEmployees(const char* filePath)
+int EmployeeManager::importEmployees(const char* filePath)
 {
 	fstream file;
 	file.open(filePath, ios::in);
+	int count = 0;
+	vector<Employee*> employees;
 	if (!file.is_open()) {
 		cout << "No se puedo abrir el archivo." << endl;
-		return;
+		return count;
 	}
-	int count = 0;
 
 	vector<vector<string>> info;
 	string line;
@@ -49,18 +50,21 @@ void EmployeeManager::importEmployees(const char* filePath)
 		{
 			row.push_back(data);
 		}
-		count++;
 		if (row.size() == 4) info.push_back(row);  
 		else {
 			cout << "Se ha descartado la línea " << count << " por falta de argumentos" << endl;
+			count--;
 		}// add non-empty rows to matrix
 	}
 	for (int i = 1; i < info.size(); i++) {
 		addEmployee(stoi(info[i][3]), getLastID() + 1, info[i][0], info[i][1], info[i][2]);
+		employees.emplace_back(getEmployee(getLastID()));
+		count++;
 	}
 
 	if (count == 0)
 		cout << "Empty CSV\n";
+	return count;
 }
 
 void EmployeeManager::setLoading(bool loading)

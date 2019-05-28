@@ -93,6 +93,8 @@ public:
         ModifyEmployeeDialog->setWindowTitle(QApplication::translate("ModifyEmployeeDialog", "Dialog", nullptr));
         okButton->setText(QApplication::translate("ModifyEmployeeDialog", "OK", nullptr));
         cancelButton->setText(QApplication::translate("ModifyEmployeeDialog", "Cancel", nullptr));
+        nameInput->setInputMask(QString());
+        nameInput->setText(QString());
         nameLabel->setText(QApplication::translate("ModifyEmployeeDialog", "<html><head/><body><p>Name:</p></body></html>", nullptr));
         surnameLabel->setText(QApplication::translate("ModifyEmployeeDialog", "<html><head/><body><p>Surname:</p></body></html>", nullptr));
         emailLabel->setText(QApplication::translate("ModifyEmployeeDialog", "<html><head/><body><p>Email:</p></body></html>", nullptr));

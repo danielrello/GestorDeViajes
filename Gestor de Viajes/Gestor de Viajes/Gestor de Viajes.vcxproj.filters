@@ -26,6 +26,12 @@
     <ClCompile Include="ModifyDialogClass.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
+    <ClCompile Include="CreateDialogClass.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="EmployeeProfileWindow.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resource Files">
@@ -71,6 +77,12 @@
     <QtMoc Include="ModifyDialogClass.h">
       <Filter>Header Files\UI</Filter>
     </QtMoc>
+    <QtMoc Include="CreateDialogClass.h">
+      <Filter>Header Files\UI</Filter>
+    </QtMoc>
+    <QtMoc Include="EmployeeProfileWindow.h">
+      <Filter>Header Files\UI</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="GestordeViajes.ui">
@@ -80,6 +92,12 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="EmployeeWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="CreateEmployeeDialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="EmployeeProfileWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

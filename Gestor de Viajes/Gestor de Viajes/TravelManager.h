@@ -1,7 +1,6 @@
 #pragma once
 #include "Travel.h"
 #include <vector>
-#include <string>
 
 class TravelManager
 {
@@ -12,7 +11,7 @@ class TravelManager
 public:
 	TravelManager();
 	~TravelManager();
-	void importTravels(const char* filepath);
+	int importTravels(const char* filepath);
 	void setLoading(bool loading);
 	Travel* getTravel(int id);
 	void addTravel(int id, std::string departureLocation, std::string arrivalLocation, std::string departureTime, std::string arrivalTime, int cost);
