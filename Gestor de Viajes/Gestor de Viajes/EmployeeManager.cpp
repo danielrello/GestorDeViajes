@@ -30,7 +30,6 @@ int EmployeeManager::importEmployees(const char* filePath)
 	fstream file;
 	file.open(filePath, ios::in);
 	int count = 0;
-	vector<Employee*> employees;
 	if (!file.is_open()) {
 		cout << "No se puedo abrir el archivo." << endl;
 		return count;
@@ -58,7 +57,6 @@ int EmployeeManager::importEmployees(const char* filePath)
 	}
 	for (int i = 1; i < info.size(); i++) {
 		addEmployee(stoi(info[i][3]), getLastID() + 1, info[i][0], info[i][1], info[i][2]);
-		employees.emplace_back(getEmployee(getLastID()));
 		count++;
 	}
 

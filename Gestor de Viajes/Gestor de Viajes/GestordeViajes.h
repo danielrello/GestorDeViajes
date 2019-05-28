@@ -22,6 +22,7 @@ private:
 	Ui::GestordeViajesClass ui;
 private slots:
 	void employeeManagement();
+	void travelManagement();
 	void importTravels();
 	void importEmployees();
 	void exit();

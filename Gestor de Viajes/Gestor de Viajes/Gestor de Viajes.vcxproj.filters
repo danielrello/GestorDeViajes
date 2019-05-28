@@ -21,16 +21,28 @@
       <Filter>Source Files\UI</Filter>
     </ClCompile>
     <ClCompile Include="EmployeeWindow.cpp">
-      <Filter>Source Files\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="ModifyDialogClass.cpp">
-      <Filter>Source Files\UI</Filter>
+      <Filter>Source Files\UI\Employee</Filter>
     </ClCompile>
     <ClCompile Include="CreateDialogClass.cpp">
-      <Filter>Source Files\UI</Filter>
+      <Filter>Source Files\UI\Employee</Filter>
     </ClCompile>
     <ClCompile Include="EmployeeProfileWindow.cpp">
-      <Filter>Source Files\UI</Filter>
+      <Filter>Source Files\UI\Employee</Filter>
+    </ClCompile>
+    <ClCompile Include="ModifyDialogClass.cpp">
+      <Filter>Source Files\UI\Employee</Filter>
+    </ClCompile>
+    <ClCompile Include="TravelWindow.cpp">
+      <Filter>Source Files\UI\Travel</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateTravelClass.cpp">
+      <Filter>Source Files\UI\Travel</Filter>
+    </ClCompile>
+    <ClCompile Include="ModifyTravelClass.cpp">
+      <Filter>Source Files\UI\Travel</Filter>
+    </ClCompile>
+    <ClCompile Include="TravelProfileWindow.cpp">
+      <Filter>Source Files\UI\Travel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -66,39 +78,81 @@
     <Filter Include="Header Files\Core">
       <UniqueIdentifier>{7ae359ad-6122-4018-a469-42dbce02a503}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\UI\Travel">
+      <UniqueIdentifier>{a1b80b5b-f4a8-4956-855d-cf374398cc20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\UI\Employee">
+      <UniqueIdentifier>{889f9bef-71ed-4ef7-9065-356764bbfcb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI\Travel">
+      <UniqueIdentifier>{76318b76-0b12-4d4c-8bec-4aebdb8faed2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI\Employee">
+      <UniqueIdentifier>{63027018-801c-4c91-8e7a-fff3b0a0bf34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Form Files\Travel">
+      <UniqueIdentifier>{75c0e26c-9e60-48db-aeac-c6ef3fe4961b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Form Files\Employee">
+      <UniqueIdentifier>{703c2843-c854-42c8-8b47-df7e51da2c03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GestordeViajes.h">
       <Filter>Header Files\UI</Filter>
     </QtMoc>
-    <QtMoc Include="EmployeeWindow.h">
-      <Filter>Header Files\UI</Filter>
-    </QtMoc>
-    <QtMoc Include="ModifyDialogClass.h">
-      <Filter>Header Files\UI</Filter>
-    </QtMoc>
     <QtMoc Include="CreateDialogClass.h">
-      <Filter>Header Files\UI</Filter>
+      <Filter>Header Files\UI\Employee</Filter>
     </QtMoc>
     <QtMoc Include="EmployeeProfileWindow.h">
-      <Filter>Header Files\UI</Filter>
+      <Filter>Header Files\UI\Employee</Filter>
+    </QtMoc>
+    <QtMoc Include="EmployeeWindow.h">
+      <Filter>Header Files\UI\Employee</Filter>
+    </QtMoc>
+    <QtMoc Include="ModifyDialogClass.h">
+      <Filter>Header Files\UI\Employee</Filter>
+    </QtMoc>
+    <QtMoc Include="TravelWindow.h">
+      <Filter>Header Files\UI\Travel</Filter>
+    </QtMoc>
+    <QtMoc Include="CreateTravelClass.h">
+      <Filter>Header Files\UI\Travel</Filter>
+    </QtMoc>
+    <QtMoc Include="ModifyTravelClass.h">
+      <Filter>Header Files\UI\Travel</Filter>
+    </QtMoc>
+    <QtMoc Include="TravelProfileWindow.h">
+      <Filter>Header Files\UI\Travel</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="GestordeViajes.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="ModifyEmployeeDialog.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="EmployeeWindow.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtUic Include="CreateEmployeeDialog.ui">
-      <Filter>Form Files</Filter>
+      <Filter>Form Files\Employee</Filter>
     </QtUic>
     <QtUic Include="EmployeeProfileWindow.ui">
-      <Filter>Form Files</Filter>
+      <Filter>Form Files\Employee</Filter>
+    </QtUic>
+    <QtUic Include="EmployeeWindow.ui">
+      <Filter>Form Files\Employee</Filter>
+    </QtUic>
+    <QtUic Include="ModifyEmployeeDialog.ui">
+      <Filter>Form Files\Employee</Filter>
+    </QtUic>
+    <QtUic Include="TravelWindow.ui">
+      <Filter>Form Files\Travel</Filter>
+    </QtUic>
+    <QtUic Include="CreateTravelClass.ui">
+      <Filter>Form Files\Travel</Filter>
+    </QtUic>
+    <QtUic Include="ModifyTravelDialog.ui">
+      <Filter>Form Files\Travel</Filter>
+    </QtUic>
+    <QtUic Include="TravelProfileWindow.ui">
+      <Filter>Form Files\Travel</Filter>
     </QtUic>
   </ItemGroup>
   <ItemGroup>

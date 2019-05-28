@@ -18,8 +18,10 @@ EmployeeProfileWindowClass::EmployeeProfileWindowClass(QWidget *parent)
 	ui.tableWidget->setHorizontalHeaderLabels(columnHeader);
 	ui.tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
+	connect(ui.comboBox, SIGNAL(currentIndexChanged(QString)), this, SLOT(linkTravel(QString)));
 	connect(ui.backButton, SIGNAL(clicked()), this, SLOT(back()));
 	connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), this, SLOT(changeTable(QItemSelection, QItemSelection)));
+
 }
 
 void EmployeeProfileWindowClass::linkPreviousWindow(EmployeeWindowClass * previous)
@@ -39,14 +41,37 @@ void EmployeeProfileWindowClass::setEmployee(Employee * employee)
 	this->employee = employee;
 
 	QString resident = "Temporary Employee";
-	if (employee->isResident())
+	if (employee->isResident()) {
 		resident = "Resident Employee";
+	}
 
 	ui.nameOutput->setText(QString::fromStdString(employee->getName()));
 	ui.surnameOutput->setText(QString::fromStdString(employee->getSurname()));
 	ui.emailOutput->setText(QString::fromStdString(employee->getEmail()));
 	ui.residentLabel->setText(resident);
 	loadList();
+
+	//Combo Box items
+
+	ui.comboBox->addItem(QString(""), Qt::DisplayRole);
+	for (auto i = 0; i < travelManager->getTravels().size(); i++) {
+		Travel *travel = travelManager->getTravels()[i];
+		string arrivalLocation = travel->getArrivalLocation();
+		string departureLocation = travel->getDepartureLocation();
+		string departureTime = travel->getDeparturetime();
+		string arrivalTime = travel->getArrivalTime();
+		int cost = travel->getCost();
+
+		QString data =
+			QString::number(travel->getID()) + QString(";") +
+			QString::fromStdString(arrivalLocation) + QString(";") +
+			QString::fromStdString(departureLocation) + QString(";") +
+			QString::fromStdString(arrivalTime) + QString(";") +
+			QString::fromStdString(departureTime) + QString(";") +
+			QString::number(cost);
+		ui.comboBox->addItem(data, Qt::DisplayRole);
+
+	}
 }
 
 void EmployeeProfileWindowClass::addManager(EmployeeManager *manager)
@@ -62,9 +87,10 @@ void EmployeeProfileWindowClass::back() {
 void EmployeeProfileWindowClass::loadList() {
 	Travel * travel;
 	ui.tableWidget->setRowCount(0);
+	Resident *employee = (Resident*)this->employee;
 	if(employee->isResident())
-		for (auto i = 0; i < travelManager->getTravels().size(); i++) {
-			travel = travelManager->getTravels()[i];
+		for (auto i = 0; i < employee->getTravels().size(); i++) {
+			travel = employee->getTravels()[i];
 			int row_number = ui.tableWidget->rowCount();
 			ui.tableWidget->insertRow(row_number);
 
@@ -100,5 +126,26 @@ void EmployeeProfileWindowClass::loadList() {
 	else{
 		ui.tableWidget->hide();
 		ui.label_4->hide();
+	}
+}
+
+void EmployeeProfileWindowClass::linkTravel(QString data)
+{
+	if (data != QString("")) {
+		QStringList list;
+		list = data.split(QString(";"));
+		Resident* resident = (Resident*)employee;
+		QString id = data[0];
+		QMessageBox::StandardButton reply;
+		reply = QMessageBox::question(this, "Modify Employee", QString("Do you want to link:\n")
+			+ list[1] + QString(" | ") + list[2] + QString(" | ") + list[3] + QString(" | ") + list[4] + QString(" | ") + list[5],
+			QMessageBox::Yes | QMessageBox::No);
+		if (reply == QMessageBox::Yes) {
+			resident->linkTravel(travelManager->getTravel(id.toInt()));
+			loadList();
+		}
+		else {
+			return;
+		}
 	}
 }

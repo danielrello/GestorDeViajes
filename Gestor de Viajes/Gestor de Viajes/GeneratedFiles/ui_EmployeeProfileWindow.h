@@ -11,13 +11,13 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTableWidget>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -36,10 +36,12 @@ public:
     QLabel *emailOutput;
     QLabel *residentLabel;
     QPushButton *exportButton;
-    QWidget *verticalLayoutWidget;
-    QVBoxLayout *verticalLayout;
+    QWidget *formLayoutWidget_2;
+    QFormLayout *formLayout_3;
     QLabel *label_4;
+    QLabel *label_5;
     QTableWidget *tableWidget;
+    QComboBox *comboBox;
     QPushButton *backButton;
 
     void setupUi(QMainWindow *EmployeeProfileWindow)
@@ -96,26 +98,36 @@ public:
         exportButton = new QPushButton(centralwidget);
         exportButton->setObjectName(QString::fromUtf8("exportButton"));
         exportButton->setGeometry(QRect(430, 80, 167, 23));
-        verticalLayoutWidget = new QWidget(centralwidget);
-        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(120, 180, 391, 211));
-        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        label_4 = new QLabel(verticalLayoutWidget);
+        formLayoutWidget_2 = new QWidget(centralwidget);
+        formLayoutWidget_2->setObjectName(QString::fromUtf8("formLayoutWidget_2"));
+        formLayoutWidget_2->setGeometry(QRect(130, 170, 321, 231));
+        formLayout_3 = new QFormLayout(formLayoutWidget_2);
+        formLayout_3->setObjectName(QString::fromUtf8("formLayout_3"));
+        formLayout_3->setContentsMargins(0, 0, 0, 0);
+        label_4 = new QLabel(formLayoutWidget_2);
         label_4->setObjectName(QString::fromUtf8("label_4"));
 
-        verticalLayout->addWidget(label_4);
+        formLayout_3->setWidget(0, QFormLayout::LabelRole, label_4);
 
-        tableWidget = new QTableWidget(verticalLayoutWidget);
+        label_5 = new QLabel(formLayoutWidget_2);
+        label_5->setObjectName(QString::fromUtf8("label_5"));
+
+        formLayout_3->setWidget(2, QFormLayout::LabelRole, label_5);
+
+        tableWidget = new QTableWidget(formLayoutWidget_2);
         tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
 
-        verticalLayout->addWidget(tableWidget);
+        formLayout_3->setWidget(1, QFormLayout::SpanningRole, tableWidget);
 
-        backButton = new QPushButton(verticalLayoutWidget);
+        comboBox = new QComboBox(formLayoutWidget_2);
+        comboBox->setObjectName(QString::fromUtf8("comboBox"));
+
+        formLayout_3->setWidget(2, QFormLayout::FieldRole, comboBox);
+
+        backButton = new QPushButton(formLayoutWidget_2);
         backButton->setObjectName(QString::fromUtf8("backButton"));
 
-        verticalLayout->addWidget(backButton);
+        formLayout_3->setWidget(3, QFormLayout::SpanningRole, backButton);
 
         EmployeeProfileWindow->setCentralWidget(centralwidget);
 
@@ -136,6 +148,7 @@ public:
         residentLabel->setText(QApplication::translate("EmployeeProfileWindow", "TextLabel", nullptr));
         exportButton->setText(QApplication::translate("EmployeeProfileWindow", "Export to PDF", nullptr));
         label_4->setText(QApplication::translate("EmployeeProfileWindow", "Employee Travels", nullptr));
+        label_5->setText(QApplication::translate("EmployeeProfileWindow", "Link Travel", nullptr));
         backButton->setText(QApplication::translate("EmployeeProfileWindow", "Back", nullptr));
     } // retranslateUi
 

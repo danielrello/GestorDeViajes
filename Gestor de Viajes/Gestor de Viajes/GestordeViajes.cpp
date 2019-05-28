@@ -1,5 +1,6 @@
 #include "GestordeViajes.h"
 #include "EmployeeWindow.h"
+#include "TravelWindow.h"
 #include "qfiledialog.h"
 #include "qmessagebox.h"
 
@@ -11,6 +12,7 @@ GestordeViajes::GestordeViajes(QWidget *parent)
 	travelManager = new TravelManager();
 	connect(ui.exitButton, SIGNAL(clicked()), this, SLOT(exit()));
 	connect(ui.employeeManagerB, SIGNAL(clicked()), this, SLOT(employeeManagement()));
+	connect(ui.travelManagerB, SIGNAL(clicked()), this, SLOT(travelManagement()));
 	connect(ui.importEmployeeButton, SIGNAL(clicked()), this, SLOT(importEmployees()));
 	connect(ui.importTravelsButton, SIGNAL(clicked()), this, SLOT(importTravels()));
 }
@@ -87,5 +89,12 @@ void GestordeViajes::employeeManagement() {
 	employeeWindow->addManager(employeeManager);
 	employeeWindow->linkPreviousWindow(this);
 	employeeWindow->show();
+	this->hide();
+}
+void GestordeViajes::travelManagement() {
+	TravelWindowClass *window = new TravelWindowClass(this);
+	window->addManager(travelManager);
+	window->linkPreviousWindow(this);
+	window->show();
 	this->hide();
 }

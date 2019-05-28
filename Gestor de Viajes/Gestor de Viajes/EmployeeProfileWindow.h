@@ -25,4 +25,5 @@ public:
 	void loadList();
 private slots:
 	void back();
+	void linkTravel(QString data);
 };

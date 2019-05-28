@@ -59,7 +59,6 @@ int TravelManager::importTravels(const char* filePath)
 	}
 	for (int i = 1; i < info.size(); i++) {
 		addTravel(lastID + 1, info[i][0], info[i][1], info[i][2], info[i][3], stoi(info[i][4]));
-		travels.emplace_back(getTravel(lastID));
 		count++;
 	}
 

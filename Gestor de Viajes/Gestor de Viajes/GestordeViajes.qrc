@@ -4,5 +4,10 @@
         <file>ModifyEmployeeDialog.ui</file>
         <file>CreateEmployeeDialog.ui</file>
         <file>EmployeeProfileWindow.ui</file>
+        <file>TravelWindow.ui</file>
+        <file>CreateTravelClass.ui</file>
+        <file>ModifyTravelDialog.ui</file>
+        <file>TravelProfileWindow.ui</file>
+        <file>LinkTravelDialog.ui</file>
     </qresource>
 </RCC>
