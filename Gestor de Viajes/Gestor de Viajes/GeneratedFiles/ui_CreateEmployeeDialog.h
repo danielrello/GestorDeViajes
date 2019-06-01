@@ -40,6 +40,7 @@ public:
     QLineEdit *surnameInput;
     QLineEdit *emailInput;
     QCheckBox *isResidentCBox;
+    QLabel *mailError;
 
     void setupUi(QDialog *CreateEmployeeDialog)
     {
@@ -108,6 +109,14 @@ public:
 
         formLayout->setWidget(3, QFormLayout::FieldRole, isResidentCBox);
 
+        mailError = new QLabel(CreateEmployeeDialog);
+        mailError->setObjectName(QString::fromUtf8("mailError"));
+        mailError->setEnabled(true);
+        mailError->setGeometry(QRect(80, 150, 271, 16));
+        mailError->setInputMethodHints(Qt::ImhEmailCharactersOnly);
+        mailError->raise();
+        layoutWidget->raise();
+        formLayoutWidget->raise();
 
         retranslateUi(CreateEmployeeDialog);
         QObject::connect(okButton, SIGNAL(clicked()), CreateEmployeeDialog, SLOT(accept()));
@@ -125,6 +134,7 @@ public:
         label_2->setText(QApplication::translate("CreateEmployeeDialog", "Surname", nullptr));
         label_3->setText(QApplication::translate("CreateEmployeeDialog", "Email", nullptr));
         isResidentCBox->setText(QApplication::translate("CreateEmployeeDialog", "Is a resident employee?", nullptr));
+        mailError->setText(QApplication::translate("CreateEmployeeDialog", "<html><head/><body><p><span style=\" color:#ff0000;\">TextLabel</span></p></body></html>", nullptr));
     } // retranslateUi
 
 };

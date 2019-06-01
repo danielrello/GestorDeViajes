@@ -1,2 +1,31 @@
-﻿  EmployeeProfileWindow.cpp
-  Gestor de Viajes.vcxproj -> C:\Users\danir\Source\Repos\danielrello\GestorDeViajes\Gestor de Viajes\x64\Debug\Gestor de Viajes.exe
+﻿  Moc'ing GestordeViajes.h...
+  CreateDialogClass.cpp
+  CreateTravelClass.cpp
+  EmailLoginDialog.cpp
+  EmployeeProfileWindow.cpp
+c:\users\danir\source\repos\danielrello\gestordeviajes\gestor de viajes\gestor de viajes\employeeprofilewindow.cpp(233): warning C4129: '<': secuencia de escape de carácter no reconocida
+  EmployeeWindow.cpp
+  ErrorHandler.cpp
+  Functions.cpp
+  Employee.cpp
+  EmployeeManager.cpp
+  GestordeViajes.cpp
+  main.cpp
+  ModifyDialogClass.cpp
+  ModifyTravelClass.cpp
+  Travel.cpp
+  TravelManager.cpp
+  TravelProfileWindow.cpp
+  TravelWindow.cpp
+  qrc_GestordeViajes.cpp
+  moc_TravelProfileWindow.cpp
+  moc_TravelWindow.cpp
+  moc_EmployeeWindow.cpp
+  moc_CreateDialogClass.cpp
+  moc_EmployeeProfileWindow.cpp
+  moc_CreateTravelClass.cpp
+  moc_EmailLoginDialog.cpp
+  moc_ModifyDialogClass.cpp
+  moc_ModifyTravelClass.cpp
+  moc_GestordeViajes.cpp
+LINK : fatal error LNK1104: no se puede abrir el archivo 'SMTPEmail.lib'

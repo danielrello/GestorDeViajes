@@ -18,6 +18,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTableWidget>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -35,7 +36,6 @@ public:
     QLabel *label_3;
     QLabel *emailOutput;
     QLabel *residentLabel;
-    QPushButton *exportButton;
     QWidget *formLayoutWidget_2;
     QFormLayout *formLayout_3;
     QLabel *label_4;
@@ -43,6 +43,10 @@ public:
     QTableWidget *tableWidget;
     QComboBox *comboBox;
     QPushButton *backButton;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *verticalLayout;
+    QPushButton *exportButton;
+    QPushButton *sendMailButton;
 
     void setupUi(QMainWindow *EmployeeProfileWindow)
     {
@@ -95,9 +99,6 @@ public:
 
         formLayout->setWidget(3, QFormLayout::FieldRole, residentLabel);
 
-        exportButton = new QPushButton(centralwidget);
-        exportButton->setObjectName(QString::fromUtf8("exportButton"));
-        exportButton->setGeometry(QRect(430, 80, 167, 23));
         formLayoutWidget_2 = new QWidget(centralwidget);
         formLayoutWidget_2->setObjectName(QString::fromUtf8("formLayoutWidget_2"));
         formLayoutWidget_2->setGeometry(QRect(130, 170, 321, 231));
@@ -129,6 +130,22 @@ public:
 
         formLayout_3->setWidget(3, QFormLayout::SpanningRole, backButton);
 
+        verticalLayoutWidget = new QWidget(centralwidget);
+        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(440, 80, 160, 80));
+        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        exportButton = new QPushButton(verticalLayoutWidget);
+        exportButton->setObjectName(QString::fromUtf8("exportButton"));
+
+        verticalLayout->addWidget(exportButton);
+
+        sendMailButton = new QPushButton(verticalLayoutWidget);
+        sendMailButton->setObjectName(QString::fromUtf8("sendMailButton"));
+
+        verticalLayout->addWidget(sendMailButton);
+
         EmployeeProfileWindow->setCentralWidget(centralwidget);
 
         retranslateUi(EmployeeProfileWindow);
@@ -146,10 +163,11 @@ public:
         label_3->setText(QApplication::translate("EmployeeProfileWindow", "Email:", nullptr));
         emailOutput->setText(QApplication::translate("EmployeeProfileWindow", "TextLabel", nullptr));
         residentLabel->setText(QApplication::translate("EmployeeProfileWindow", "TextLabel", nullptr));
-        exportButton->setText(QApplication::translate("EmployeeProfileWindow", "Export to PDF", nullptr));
         label_4->setText(QApplication::translate("EmployeeProfileWindow", "Employee Travels", nullptr));
         label_5->setText(QApplication::translate("EmployeeProfileWindow", "Link Travel", nullptr));
         backButton->setText(QApplication::translate("EmployeeProfileWindow", "Back", nullptr));
+        exportButton->setText(QApplication::translate("EmployeeProfileWindow", "Export to PDF", nullptr));
+        sendMailButton->setText(QApplication::translate("EmployeeProfileWindow", "Send Mail", nullptr));
     } // retranslateUi
 
 };

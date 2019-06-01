@@ -9,5 +9,6 @@
         <file>ModifyTravelDialog.ui</file>
         <file>TravelProfileWindow.ui</file>
         <file>LinkTravelDialog.ui</file>
+        <file>EmailLoginDialog.ui</file>
     </qresource>
 </RCC>

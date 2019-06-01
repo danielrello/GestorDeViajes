@@ -1,7 +1,12 @@
 #include "EmployeeProfileWindow.h"
 #include <iostream>
 #include "qmessagebox.h"
-
+#include "libraries/smtpMail/smtpMime.h"
+#include "qfiledialog.h"
+#include "qtextdocument.h"
+#include "qprinter.h"
+#include "EmailLoginDialog.h"
+#include "ErrorHandler.h"
 
 EmployeeProfileWindowClass::EmployeeProfileWindowClass(QWidget *parent)
 	: QMainWindow(parent)
@@ -18,10 +23,11 @@ EmployeeProfileWindowClass::EmployeeProfileWindowClass(QWidget *parent)
 	ui.tableWidget->setHorizontalHeaderLabels(columnHeader);
 	ui.tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
+	connect(ui.sendMailButton, SIGNAL(clicked()), SLOT(sendMail()));
 	connect(ui.comboBox, SIGNAL(currentIndexChanged(QString)), this, SLOT(linkTravel(QString)));
 	connect(ui.backButton, SIGNAL(clicked()), this, SLOT(back()));
 	connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), this, SLOT(changeTable(QItemSelection, QItemSelection)));
-
+	connect(ui.exportButton, SIGNAL(clicked()), SLOT(exportToPDF()));
 }
 
 void EmployeeProfileWindowClass::linkPreviousWindow(EmployeeWindowClass * previous)
@@ -52,25 +58,30 @@ void EmployeeProfileWindowClass::setEmployee(Employee * employee)
 	loadList();
 
 	//Combo Box items
+	if (employee->isResident()) {
+		ui.comboBox->addItem(QString(""), Qt::DisplayRole);
+		for (auto i = 0; i < travelManager->getTravels().size(); i++) {
+			Travel *travel = travelManager->getTravels()[i];
+			string arrivalLocation = travel->getArrivalLocation();
+			string departureLocation = travel->getDepartureLocation();
+			string departureTime = travel->getDeparturetime();
+			string arrivalTime = travel->getArrivalTime();
+			int cost = travel->getCost();
 
-	ui.comboBox->addItem(QString(""), Qt::DisplayRole);
-	for (auto i = 0; i < travelManager->getTravels().size(); i++) {
-		Travel *travel = travelManager->getTravels()[i];
-		string arrivalLocation = travel->getArrivalLocation();
-		string departureLocation = travel->getDepartureLocation();
-		string departureTime = travel->getDeparturetime();
-		string arrivalTime = travel->getArrivalTime();
-		int cost = travel->getCost();
+			QString data =
+				QString::number(travel->getID()) + QString(";") +
+				QString::fromStdString(arrivalLocation) + QString(";") +
+				QString::fromStdString(departureLocation) + QString(";") +
+				QString::fromStdString(arrivalTime) + QString(";") +
+				QString::fromStdString(departureTime) + QString(";") +
+				QString::number(cost);
+			ui.comboBox->addItem(data, Qt::DisplayRole);
 
-		QString data =
-			QString::number(travel->getID()) + QString(";") +
-			QString::fromStdString(arrivalLocation) + QString(";") +
-			QString::fromStdString(departureLocation) + QString(";") +
-			QString::fromStdString(arrivalTime) + QString(";") +
-			QString::fromStdString(departureTime) + QString(";") +
-			QString::number(cost);
-		ui.comboBox->addItem(data, Qt::DisplayRole);
-
+		}
+	}
+	else {
+		ui.comboBox->hide();
+		ui.label_5->hide();
 	}
 }
 
@@ -80,8 +91,8 @@ void EmployeeProfileWindowClass::addManager(EmployeeManager *manager)
 }
 
 void EmployeeProfileWindowClass::back() {
-	previousWindow->show();
 	this->hide();
+	previousWindow->show();
 }
 
 void EmployeeProfileWindowClass::loadList() {
@@ -126,6 +137,106 @@ void EmployeeProfileWindowClass::loadList() {
 	else{
 		ui.tableWidget->hide();
 		ui.label_4->hide();
+	}
+}
+
+void EmployeeProfileWindowClass::sendMail()
+{
+	EmailLoginDialog login;
+	login.linkPreviousWindow(this);
+	login.linkMainWindow(mainWindow);
+
+	SmtpClient smtp("smtp.gmail.com", 465, SmtpClient::SslConnection);
+	QStringList credentials = mainWindow->getUserAndPassword();
+
+	smtp.setUser(credentials[0]);
+	smtp.setPassword(credentials[1]);
+
+	MimeMessage message;
+
+	message.setSender(new EmailAddress(credentials[0], "Gestor de Viajes"));
+	message.addRecipient(new EmailAddress(QString::fromStdString(employee->getEmail()), QString::fromStdString(employee->getName())));
+	message.setSubject("Recordatorio de viaje");
+
+	// Now add some text to the email.
+	// First we create a MimeText object.
+
+	MimeText text;
+
+	Resident* resident = (Resident*)employee;
+	QString infoViajes;
+	for (int i = 0; i < resident->getTravels().size(); i++) {
+		QString departureLocation = QString::fromStdString(resident->getTravels()[i]->getDepartureLocation());
+		QString arrivalLocation = QString::fromStdString(resident->getTravels()[i]->getArrivalLocation());
+		QString departureTime = QString::fromStdString(resident->getTravels()[i]->getDeparturetime());
+		QString arrivalTime = QString::fromStdString(resident->getTravels()[i]->getArrivalTime());
+		QString cost = QString::number(resident->getTravels()[i]->getCost());
+
+		infoViajes +=
+			QString("\n---------------------------------------------\nViaje %1 - %2\n").arg(departureLocation).arg(arrivalLocation) +
+			QString("Hora de Salida: %1\nHora de llegada: %2\n").arg(departureTime).arg(arrivalTime) +
+			QString("Coste del viaje: %1").arg(cost) + 
+			QString("---------------------------------------------\n");
+	}
+
+	text.setText(
+		QString("Querido %1 %2:\nTe adjunto los viajes que tienes pendientes.\n")
+		.arg(QString::fromStdString(resident->getName()))
+		.arg(QString::fromStdString(resident->getSurname()))
+		+ infoViajes
+	);
+
+	// Now add it to the mail
+
+	message.addPart(&text);
+
+	smtp.connectToHost();
+	if (smtp.login()) {
+		if (!smtp.sendMail(message)) {
+			errorDialog(this, MAIL_SERVICE_ERROR);
+		}
+		else
+			smtp.quit();
+	}
+	else {
+		errorDialog(this, LOGIN_ERROR);
+	}
+}
+
+void EmployeeProfileWindowClass::exportToPDF()
+{
+	QFileDialog saveDialog;
+	QString fileName = saveDialog.getSaveFileName((QWidget*)0, "Export PDF", QString(), "*.pdf");
+	if (!QFileInfo(fileName).baseName().isEmpty()) {
+		if (QFileInfo(fileName).suffix().isEmpty()) { fileName.append(".pdf"); }
+		QPrinter printer(QPrinter::PrinterResolution);
+		printer.setOutputFormat(QPrinter::PdfFormat);
+		printer.setPaperSize(QPrinter::A4);
+		printer.setOutputFileName(fileName);
+		Resident* resident = (Resident*)employee;
+		QString infoViajes;
+		for (int i = 0; i < resident->getTravels().size(); i++) {
+			QString departureLocation = QString::fromStdString(resident->getTravels()[i]->getDepartureLocation());
+			QString arrivalLocation = QString::fromStdString(resident->getTravels()[i]->getArrivalLocation());
+			QString departureTime = QString::fromStdString(resident->getTravels()[i]->getDeparturetime());
+			QString arrivalTime = QString::fromStdString(resident->getTravels()[i]->getArrivalTime());
+			QString cost = QString::number(resident->getTravels()[i]->getCost());
+
+			infoViajes +=
+				QString("<h2>Viaje %1 - %2</h2>").arg(departureLocation).arg(arrivalLocation) +
+				QString("<p>Hora de Salida: %1</p><p>Hora de llegada: %2</p>").arg(departureTime).arg(arrivalTime) +
+				QString("<p>Coste del viaje: %1</p>").arg(cost);
+		}
+
+		QTextDocument doc;
+		doc.setHtml(
+			QString("<h1>Ficha de empleado</h1><p>Nombre: %1\</p><p>Apellido: %2</p><p>Email: %3</p>")
+			.arg(QString::fromStdString(employee->getName()))
+			.arg(QString::fromStdString(employee->getSurname()))
+			.arg(QString::fromStdString(employee->getEmail())) + infoViajes
+		);
+		doc.setPageSize(printer.pageRect().size()); // This is necessary if you want to hide the page number
+		doc.print(&printer);
 	}
 }
 

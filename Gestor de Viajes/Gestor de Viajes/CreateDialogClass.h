@@ -20,6 +20,7 @@ private:
 	EmployeeManager *manager;
 
 private slots:
+	void adjustTextColor();
 	void accept();
 	void reject();
 };

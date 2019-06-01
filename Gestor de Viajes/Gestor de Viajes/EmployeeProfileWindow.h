@@ -25,5 +25,7 @@ public:
 	void loadList();
 private slots:
 	void back();
+	void sendMail();
+	void exportToPDF();
 	void linkTravel(QString data);
 };

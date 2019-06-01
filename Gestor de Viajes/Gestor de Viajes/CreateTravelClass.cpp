@@ -1,5 +1,6 @@
 #include "CreateTravelClass.h"
 #include "qmessagebox.h"
+#include "ErrorHandler.h"
 
 CreateTravelClass::CreateTravelClass(QWidget *parent)
 	: QDialog(parent)
@@ -32,6 +33,28 @@ void CreateTravelClass::accept()
 	QString departureTime = ui.departureTime->text();
 	QString arrivalTime = ui.arrivalTime->text();
 	QString cost = ui.costInput->text();
+
+	QRegularExpression error("\\W*");
+	QRegularExpressionMatch match = error.match(departureLocation);
+	if (arrivalLocation == departureLocation) {
+		errorDialog(this, DUPLICATED_ARRIVALDEPARTURE_ERROR);
+		return;
+	}
+	if (match.hasMatch()) {
+		errorDialog(this, CARACTER_ERROR);
+		return;
+	}
+	match = error.match(arrivalLocation);
+	if (match.hasMatch()) {
+		errorDialog(this, CARACTER_ERROR);
+		return;
+	}
+	error.setPattern("\\D*");
+	match = error.match(cost);
+	if (match.hasMatch()) {
+		errorDialog(this, NUMBER_ERROR);
+		return;
+	}
 
 	int lastID = manager->getLastID() + 1;
 

@@ -44,6 +44,12 @@
     <ClCompile Include="TravelProfileWindow.cpp">
       <Filter>Source Files\UI\Travel</Filter>
     </ClCompile>
+    <ClCompile Include="ErrorHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EmailLoginDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resource Files">
@@ -125,6 +131,9 @@
     <QtMoc Include="TravelProfileWindow.h">
       <Filter>Header Files\UI\Travel</Filter>
     </QtMoc>
+    <QtMoc Include="EmailLoginDialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="GestordeViajes.ui">
@@ -154,6 +163,9 @@
     <QtUic Include="TravelProfileWindow.ui">
       <Filter>Form Files\Travel</Filter>
     </QtUic>
+    <QtUic Include="EmailLoginDialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="GestordeViajes.qrc">
@@ -181,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="TravelManager.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorHandler.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

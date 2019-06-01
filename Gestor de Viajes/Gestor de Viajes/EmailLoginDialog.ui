@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CreateEmployeeDialog</class>
- <widget class="QDialog" name="CreateEmployeeDialog">
+ <class>emailLoginDialog</class>
+ <widget class="QDialog" name="emailLoginDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>468</width>
+    <width>400</width>
     <height>300</height>
    </rect>
   </property>
@@ -16,13 +16,13 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>20</y>
-     <width>77</width>
-     <height>106</height>
+     <x>20</x>
+     <y>250</y>
+     <width>351</width>
+     <height>33</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout">
+   <layout class="QHBoxLayout">
     <property name="spacing">
      <number>6</number>
     </property>
@@ -39,9 +39,22 @@
      <number>0</number>
     </property>
     <item>
+     <spacer>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>131</width>
+        <height>31</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
      <widget class="QPushButton" name="okButton">
       <property name="text">
-       <string>OK</string>
+       <string>Login</string>
       </property>
      </widget>
     </item>
@@ -52,124 +65,85 @@
       </property>
      </widget>
     </item>
-    <item>
-     <spacer>
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
    </layout>
   </widget>
   <widget class="QWidget" name="formLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>20</y>
-     <width>271</width>
-     <height>111</height>
+     <x>50</x>
+     <y>80</y>
+     <width>291</width>
+     <height>80</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">
     <item row="0" column="0">
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>Name</string>
+       <string>User</string>
       </property>
      </widget>
     </item>
     <item row="1" column="0">
      <widget class="QLabel" name="label_2">
       <property name="text">
-       <string>Surname</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>Email</string>
+       <string>Password</string>
       </property>
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QLineEdit" name="nameInput"/>
+     <widget class="QLineEdit" name="userInput"/>
     </item>
     <item row="1" column="1">
-     <widget class="QLineEdit" name="surnameInput"/>
-    </item>
-    <item row="2" column="1">
-     <widget class="QLineEdit" name="emailInput"/>
-    </item>
-    <item row="3" column="1">
-     <widget class="QCheckBox" name="isResidentCBox">
-      <property name="text">
-       <string>Is a resident employee?</string>
-      </property>
-     </widget>
+     <widget class="QLineEdit" name="passwordInput"/>
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="mailError">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
+  <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>150</y>
-     <width>271</width>
+     <x>140</x>
+     <y>30</y>
+     <width>141</width>
      <height>16</height>
     </rect>
    </property>
-   <property name="inputMethodHints">
-    <set>Qt::ImhEmailCharactersOnly</set>
-   </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>Gmail SMTP Connection</string>
    </property>
   </widget>
-  <zorder>mailError</zorder>
-  <zorder>layoutWidget</zorder>
-  <zorder>formLayoutWidget</zorder>
  </widget>
  <resources/>
  <connections>
   <connection>
    <sender>okButton</sender>
    <signal>clicked()</signal>
-   <receiver>CreateEmployeeDialog</receiver>
+   <receiver>emailLoginDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>351</x>
-     <y>38</y>
+     <x>278</x>
+     <y>253</y>
     </hint>
     <hint type="destinationlabel">
-     <x>233</x>
-     <y>29</y>
+     <x>96</x>
+     <y>254</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>cancelButton</sender>
    <signal>clicked()</signal>
-   <receiver>CreateEmployeeDialog</receiver>
+   <receiver>emailLoginDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>330</x>
-     <y>66</y>
+     <x>369</x>
+     <y>253</y>
     </hint>
     <hint type="destinationlabel">
-     <x>197</x>
-     <y>125</y>
+     <x>179</x>
+     <y>282</y>
     </hint>
    </hints>
   </connection>

@@ -34,6 +34,19 @@ EmployeeManager * GestordeViajes::getEmployeeManager()
 	return employeeManager;
 }
 
+void GestordeViajes::setUserAndPassword(QString user, QString password)
+{
+	userLogin = user;
+	passwordLogin = password;
+}
+
+QStringList GestordeViajes::getUserAndPassword()
+{
+	QStringList userAndPassword;
+	userAndPassword << userLogin << passwordLogin;
+	return userAndPassword;
+}
+
 void GestordeViajes::Update()
 {
 	ui.employeeCountLabel->setText(QString::fromStdString(to_string((int)employeeManager->getEmployees().size())));

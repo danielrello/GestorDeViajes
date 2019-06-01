@@ -1,5 +1,6 @@
 #include "ModifyDialogClass.h"
 #include "qmessagebox.h"
+#include "ErrorHandler.h"
 
 ModifyDialogClass::ModifyDialogClass(QWidget *parent)
 	: QDialog(parent)
@@ -38,6 +39,17 @@ void ModifyDialogClass::accept()
 	QString name = ui.nameInput->text();
 	QString surname = ui.surnameInput->text();
 	QString email = ui.emailInput->text();
+	QRegularExpression error("\\W*");
+	QRegularExpressionMatch match = error.match(name);
+	if (match.hasMatch()) {
+		errorDialog(this, CARACTER_ERROR);
+		return;
+	}
+	match = error.match(surname);
+	if (match.hasMatch()) {
+		errorDialog(this, CARACTER_ERROR);
+		return;
+	}
 
 	QMessageBox::StandardButton reply;
 	reply = QMessageBox::question(this, "Modify Employee", "Do you want to confirm the changes?",
