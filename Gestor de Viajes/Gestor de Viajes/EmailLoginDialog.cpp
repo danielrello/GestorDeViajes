@@ -1,7 +1,5 @@
 #include "EmailLoginDialog.h"
-#include "libraries/smtpMail/smtpMime.h"
 #include "ErrorHandler.h"
-
 
 EmailLoginDialog::EmailLoginDialog(QWidget *parent)
 	: QDialog(parent)
@@ -29,8 +27,8 @@ void EmailLoginDialog::reject()
 }
 
 void EmailLoginDialog::accept()
-{
-	SmtpClient smtp("smtp.gmail.com", 465, SmtpClient::SslConnection);
+{/*
+	SMTPClientSession smtp("smtp.gmail.com", 465, SmtpClient::SslConnection);
 	QString user = ui.userInput->text();
 	QString password = ui.passwordInput->text();
 
@@ -45,5 +43,5 @@ void EmailLoginDialog::accept()
 	}
 	else {
 		errorDialog(this, LOGIN_ERROR);
-	}
+	}*/
 }

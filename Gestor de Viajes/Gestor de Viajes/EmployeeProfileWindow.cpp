@@ -1,7 +1,6 @@
 #include "EmployeeProfileWindow.h"
 #include <iostream>
 #include "qmessagebox.h"
-#include "libraries/smtpMail/smtpMime.h"
 #include "qfiledialog.h"
 #include "qtextdocument.h"
 #include "qprinter.h"
@@ -23,7 +22,7 @@ EmployeeProfileWindowClass::EmployeeProfileWindowClass(QWidget *parent)
 	ui.tableWidget->setHorizontalHeaderLabels(columnHeader);
 	ui.tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-	connect(ui.sendMailButton, SIGNAL(clicked()), SLOT(sendMail()));
+	//connect(ui.sendMailButton, SIGNAL(clicked()), SLOT(sendMail()));
 	connect(ui.comboBox, SIGNAL(currentIndexChanged(QString)), this, SLOT(linkTravel(QString)));
 	connect(ui.backButton, SIGNAL(clicked()), this, SLOT(back()));
 	connect(ui.tableWidget->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), this, SLOT(changeTable(QItemSelection, QItemSelection)));
@@ -142,65 +141,65 @@ void EmployeeProfileWindowClass::loadList() {
 
 void EmployeeProfileWindowClass::sendMail()
 {
-	EmailLoginDialog login;
-	login.linkPreviousWindow(this);
-	login.linkMainWindow(mainWindow);
+	//EmailLoginDialog login;
+	//login.linkPreviousWindow(this);
+	//login.linkMainWindow(mainWindow);
 
-	SmtpClient smtp("smtp.gmail.com", 465, SmtpClient::SslConnection);
-	QStringList credentials = mainWindow->getUserAndPassword();
+	//SmtpClient smtp("smtp.gmail.com", 465, SmtpClient::SslConnection);
+	//QStringList credentials = mainWindow->getUserAndPassword();
 
-	smtp.setUser(credentials[0]);
-	smtp.setPassword(credentials[1]);
+	//smtp.setUser(credentials[0]);
+	//smtp.setPassword(credentials[1]);
 
-	MimeMessage message;
+	//MimeMessage message;
 
-	message.setSender(new EmailAddress(credentials[0], "Gestor de Viajes"));
-	message.addRecipient(new EmailAddress(QString::fromStdString(employee->getEmail()), QString::fromStdString(employee->getName())));
-	message.setSubject("Recordatorio de viaje");
+	//message.setSender(new EmailAddress(credentials[0], "Gestor de Viajes"));
+	//message.addRecipient(new EmailAddress(QString::fromStdString(employee->getEmail()), QString::fromStdString(employee->getName())));
+	//message.setSubject("Recordatorio de viaje");
 
-	// Now add some text to the email.
-	// First we create a MimeText object.
+	//// Now add some text to the email.
+	//// First we create a MimeText object.
 
-	MimeText text;
+	//MimeText text;
 
-	Resident* resident = (Resident*)employee;
-	QString infoViajes;
-	for (int i = 0; i < resident->getTravels().size(); i++) {
-		QString departureLocation = QString::fromStdString(resident->getTravels()[i]->getDepartureLocation());
-		QString arrivalLocation = QString::fromStdString(resident->getTravels()[i]->getArrivalLocation());
-		QString departureTime = QString::fromStdString(resident->getTravels()[i]->getDeparturetime());
-		QString arrivalTime = QString::fromStdString(resident->getTravels()[i]->getArrivalTime());
-		QString cost = QString::number(resident->getTravels()[i]->getCost());
+	//Resident* resident = (Resident*)employee;
+	//QString infoViajes;
+	//for (int i = 0; i < resident->getTravels().size(); i++) {
+	//	QString departureLocation = QString::fromStdString(resident->getTravels()[i]->getDepartureLocation());
+	//	QString arrivalLocation = QString::fromStdString(resident->getTravels()[i]->getArrivalLocation());
+	//	QString departureTime = QString::fromStdString(resident->getTravels()[i]->getDeparturetime());
+	//	QString arrivalTime = QString::fromStdString(resident->getTravels()[i]->getArrivalTime());
+	//	QString cost = QString::number(resident->getTravels()[i]->getCost());
 
-		infoViajes +=
-			QString("\n---------------------------------------------\nViaje %1 - %2\n").arg(departureLocation).arg(arrivalLocation) +
-			QString("Hora de Salida: %1\nHora de llegada: %2\n").arg(departureTime).arg(arrivalTime) +
-			QString("Coste del viaje: %1").arg(cost) + 
-			QString("---------------------------------------------\n");
-	}
+	//	infoViajes +=
+	//		QString("\n---------------------------------------------\nViaje %1 - %2\n").arg(departureLocation).arg(arrivalLocation) +
+	//		QString("Hora de Salida: %1\nHora de llegada: %2\n").arg(departureTime).arg(arrivalTime) +
+	//		QString("Coste del viaje: %1").arg(cost) + 
+	//		QString("---------------------------------------------\n");
+	//}
 
-	text.setText(
-		QString("Querido %1 %2:\nTe adjunto los viajes que tienes pendientes.\n")
-		.arg(QString::fromStdString(resident->getName()))
-		.arg(QString::fromStdString(resident->getSurname()))
-		+ infoViajes
-	);
+	//text.setText(
+	//	QString("Querido %1 %2:\nTe adjunto los viajes que tienes pendientes.\n")
+	//	.arg(QString::fromStdString(resident->getName()))
+	//	.arg(QString::fromStdString(resident->getSurname()))
+	//	+ infoViajes
+	//);
 
-	// Now add it to the mail
+	//// Now add it to the mail
 
-	message.addPart(&text);
+	//message.addPart(&text);
 
-	smtp.connectToHost();
-	if (smtp.login()) {
-		if (!smtp.sendMail(message)) {
-			errorDialog(this, MAIL_SERVICE_ERROR);
-		}
-		else
-			smtp.quit();
-	}
-	else {
-		errorDialog(this, LOGIN_ERROR);
-	}
+	//smtp.connectToHost();
+	//if (smtp.login()) {
+	//	if (!smtp.sendMail(message)) {
+	//		errorDialog(this, MAIL_SERVICE_ERROR);
+	//	}
+	//	else
+	//		smtp.quit();
+	//}
+	//else {
+	//	errorDialog(this, LOGIN_ERROR);
+	//}
 }
 
 void EmployeeProfileWindowClass::exportToPDF()

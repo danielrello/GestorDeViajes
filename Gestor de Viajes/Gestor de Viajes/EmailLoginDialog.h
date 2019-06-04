@@ -3,6 +3,7 @@
 #include "ui_EmailLoginDialog.h"
 #include "EmployeeProfileWindow.h"
 #include "GestordeViajes.h"
+#include <winsock2.h>
 
 class EmailLoginDialog : public QDialog
 {
